@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Financiero</title>
+    <link rel="stylesheet" href="../../static/css/admin/adminDashboard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="user">
+                    <div class="avatar"></div>
+                    <div class="info">
+                        <h3>Admin</h3>
+                        <p>admin@chargeflow.com</p>
+                    </div>
+                </div>
+                <nav>
+                    <a class="active" href="../admin/adminDashboard.html">
+                        <span class="material-icons">dashboard</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="../admin/gananciasAdmin.html">
+                        <span class="material-icons">payments</span>
+                        <span>Ganancias</span>
+                    </a>
+                    <a href="../admin/tecnicoAdmin.html">
+                        <span class="material-icons">engineering</span>
+                        <span>Técnico</span>
+                    </a>
+                </nav>
+            </div>
+            <button id="logoutBtn" class="logout">Cerrar Sesión</button>
+        </aside>
+
+        <main class="content">
+            <header>
+                <h1>Dashboard Financiero</h1>
+            </header>
+
+            <section class="grid">
+                <div class="card wide">
+                    <h2>Ingresos Totales</h2>
+                    <p class="value">$2,345,678</p>
+                    <p class="change">+12.5% vs. Último Trimestre</p>
+                    <canvas id="ingresosChart"></canvas>
+                </div>
+
+                <div class="card">
+                    <h2>Margen de Beneficio Neto</h2>
+                    <div class="row">
+                        <p class="value">35%</p>
+                        <p class="change down">-2%</p>
+                    </div>
+                    <p class="change">Vs. Mes Anterior</p>
+                    <canvas id="margenChart"></canvas>
+                </div>
+
+                <div class="card full">
+                    <h2>Resumen Financiero Clave</h2>
+                    <div class="kpi-grid">
+                        <div class="kpi">
+                            <p class="label">Crecimiento de Ingresos (Anual)</p>
+                            <p class="number">18%</p>
+                            <p class="change up">+3%</p>
+                        </div>
+                        <div class="kpi">
+                            <p class="label">Flujo de Caja Operativo</p>
+                            <p class="number">$560K</p>
+                            <p class="change up">+10%</p>
+                        </div>
+                        <div class="kpi">
+                            <p class="label">Rentabilidad sobre Activos</p>
+                            <p class="number">12%</p>
+                            <p class="change up">+1%</p>
+                        </div>
+                        <div class="kpi">
+                            <p class="label">Deuda/Patrimonio Neto</p>
+                            <p class="number">0.7x</p>
+                            <p class="change down">-0.1x</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card full">
+                    <h2>Tendencia de Ingresos Mensuales</h2>
+                    <canvas id="mensualesChart"></canvas>
+                    <div class="months">
+                        <div>
+                            <p>$195K</p><small>Enero</small>
+                        </div>
+                        <div>
+                            <p>$210K</p><small>Febrero</small>
+                        </div>
+                        <div>
+                            <p>$230K</p><small>Marzo</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../../static/js/admin/adminDashboard.js"></script>
+</body>
+
+</html>
