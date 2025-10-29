@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ChargeFlow - Gestión de Clientes</title>
+    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoClientes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="flex h-screen">
+        <aside class="sidebar">
+            <div class="sidebar-container">
+                <div class="sidebar-content">
+                    <div class="user-info">
+                        <div class="user-avatar"></div>
+                        <div class="user-details">
+                            <h1 class="user-name">Tecnico</h1>
+                            <p class="user-email">tecnico@chargeflow.com</p>
+                        </div>
+                    </div>
+                    <div class="navigation">
+                        <a class="nav-item" href="../tecnico/tecnicoDashboard.html">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            <p class="nav-text">Dashboard</p>
+                        </a>
+                        <a class="nav-item" href="../tecnico/tecnicoCitas.html">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                            <p class="nav-text">Citas</p>
+                        </a>
+                        <a class="nav-item active" href="../tecnico/tecnicoClientes.html">
+                            <span class="material-symbols-outlined">group</span>
+                            <p class="nav-text">Clientes</p>
+                        </a>
+                        <a class="nav-item" href="../tecnico/tecnicoVehiculos.html">
+                            <span class="material-symbols-outlined">directions_car</span>
+                            <p class="nav-text">Vehículos</p>
+                        </a>
+                        <a class="nav-item" href="../tecnico/tecnicoBaterias.html">
+                            <span class="material-symbols-outlined">battery_full</span>
+                            <p class="nav-text">Baterías</p>
+                        </a>
+                    </div>
+                </div>
+                <button class="logout-btn">
+                    <span class="logout-text">Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+        <div class="main-container">
+            <header class="header">
+                <div class="header-search">
+                    <label class="search-label">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" placeholder="Buscar cliente por nombre, email..." />
+                    </label>
+                </div>
+                <div class="header-actions">
+                    <button class="notification-btn">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar-small"></div>
+                        <div class="user-info-small">
+                            <p class="user-name-small">Técnico</p>
+                            <p class="user-email-small">tecnico@chargeflow.com</p>
+                        </div>
+                        <button class="dropdown-btn">
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <main class="main-content">
+                <div class="content-header">
+                    <h2 class="page-title">Gestión de Clientes</h2>
+                    <button class="add-client-btn" id="addClientBtn">
+                        <span class="material-symbols-outlined">add</span>
+                        <span>Agregar Cliente</span>
+                    </button>
+                </div>
+                <div class="table-card">
+                    <div class="table-container">
+                        <table class="clients-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <th class="table-head">Nombre completo</th>
+                                    <th class="table-head">Correo electrónico</th>
+                                    <th class="table-head">Teléfono</th>
+                                    <th class="table-head">Fecha de registro</th>
+                                    <th class="table-head text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-row">
+                                    <td class="table-cell name-cell">Juan Pérez</td>
+                                    <td class="table-cell">juan.perez@example.com</td>
+                                    <td class="table-cell">555-1234</td>
+                                    <td class="table-cell">2023-01-15</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn view-btn">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell name-cell">Ana Gómez</td>
+                                    <td class="table-cell">ana.gomez@example.com</td>
+                                    <td class="table-cell">555-5678</td>
+                                    <td class="table-cell">2023-02-20</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn view-btn">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell name-cell">Carlos Sánchez</td>
+                                    <td class="table-cell">carlos.sanchez@example.com</td>
+                                    <td class="table-cell">555-8765</td>
+                                    <td class="table-cell">2023-03-10</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn view-btn">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell name-cell">Laura Torres</td>
+                                    <td class="table-cell">laura.torres@example.com</td>
+                                    <td class="table-cell">555-4321</td>
+                                    <td class="table-cell">2023-04-05</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn view-btn">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell name-cell">Marta Ramírez</td>
+                                    <td class="table-cell">marta.ramirez@example.com</td>
+                                    <td class="table-cell">555-9876</td>
+                                    <td class="table-cell">2023-05-12</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn view-btn">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-container">
+                        <p class="pagination-info">Mostrando <span class="pagination-number">1</span> a <span
+                                class="pagination-number">5</span> de <span class="pagination-number">25</span>
+                            resultados</p>
+                        <div class="pagination-controls">
+                            <a class="pagination-arrow" href="#">
+                                <span class="material-symbols-outlined">chevron_left</span>
+                            </a>
+                            <a class="pagination-page active" href="#">1</a>
+                            <a class="pagination-page" href="#">2</a>
+                            <a class="pagination-page" href="#">3</a>
+                            <span class="pagination-ellipsis">...</span>
+                            <a class="pagination-page" href="#">5</a>
+                            <a class="pagination-arrow" href="#">
+                                <span class="material-symbols-outlined">chevron_right</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-sidebar" id="clientModal">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2 class="modal-title">Nuevo Cliente</h2>
+                    <button class="modal-close-btn" id="closeModalBtn">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div class="modal-tabs">
+                        <button class="modal-tab active">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Información del cliente</span>
+                        </button>
+                        <button class="modal-tab">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                            <span>Citas programadas</span>
+                        </button>
+                    </div>
+                    <form class="client-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Nombre</label>
+                                <input class="form-input" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Apellido</label>
+                                <input class="form-input" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Correo electrónico</label>
+                            <input class="form-input" type="email" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input class="form-input" type="tel" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dirección</label>
+                            <input class="form-input" type="text" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" id="cancelModalBtn">Cancelar</button>
+                    <button class="modal-btn save-btn">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../static/js/tecnico/tecnicoClientes.js"></script>
+</body>
+
+</html>
