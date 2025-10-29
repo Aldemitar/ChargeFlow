@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f6f8f7;
+    color: #111;
+}
+
+/* ---- LAYOUT ---- */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 256px;
+    background-color: #111418;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    flex-shrink: 0;
+}
+
+.content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* ---- SIDEBAR ---- */
+.user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYj7wb3NkQzBT0ehRhCh0f0Uir3-h48u5kNhq-EpCAn-V5KLy3xYV--Xffj44tjVJ-UdLWlATFTfY-0yxHksKvMuh563H16q819CWkXtrRRxTKL4fyT3Uo8WkBrJtTbK0ir1tUQPDCMpU8qqS19FyaTUII-TbJT4DMS6BUKzrWcDT0ebEpJNvsGfLYXlH_J5Ayugq5vVzfcV7YAaVzb9S7NTadFMVN_C6_sgg7OKbpK2M5syCp9zAtYKI6bGqMlg4b21lDW107Dc0w");
+    background-size: cover;
+}
+
+.info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.info p {
+    font-size: 0.875rem;
+    color: #9dabb9;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    color: #ffffffb3;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+nav a:hover {
+    background: #ffffff1a;
+}
+
+nav a.active {
+    background: #39e07926;
+    color: #39e079;
+}
+
+.logout {
+    width: 100%;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #39e079;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.logout:hover {
+    background-color: rgba(57, 224, 121, 0.9);
+}
+
+/* ---- HEADER ---- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* ---- BUTTONS ---- */
+.btn-primary,
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background-color: #39e079;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: rgba(57, 224, 121, 0.9);
+}
+
+.btn-secondary {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background-color: #f9fafb;
+}
+
+/* ---- FILTERS ---- */
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.filter-group {
+    position: relative;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: #f9fafb;
+}
+
+.dropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem;
+    z-index: 1000;
+    min-width: 200px;
+}
+
+.dropdown.hidden {
+    display: none;
+}
+
+.dropdown ul {
+    list-style: none;
+    margin-bottom: 0.5rem;
+}
+
+.dropdown li {
+    margin-bottom: 0.5rem;
+}
+
+.dropdown label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.dropdown input[type="checkbox"] {
+    margin: 0;
+}
+
+/* ---- GRID AND CARDS ---- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card.full {
+    grid-column: 1 / -1;
+}
+
+.value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #39e079;
+    margin: 0.5rem 0;
+}
+
+.change {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.change.up {
+    color: #16a34a;
+}
+
+.change.down {
+    color: #dc2626;
+}
+
+/* ---- TABLE ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+thead {
+    background-color: #f1f5f9;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+tbody tr:hover {
+    background: #f9fafb;
+}
+
+.highlight {
+    color: #39e079;
+    font-weight: 600;
+}
+
+/* ---- CHART ---- */
+canvas {
+    max-height: 250px;
+    margin-top: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+#dateFilterDropdown label {
+    display: block;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    color: #374151;
+}
+
+#dateFilterDropdown input[type="date"] {
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
