@@ -25,11 +25,11 @@
                     </div>
                 </div>
                 <nav>
-                    <a class="active" href="/admin/dashboard">
+                    <a href="/admin/dashboard">
                         <span class="material-icons">dashboard</span>
                         <span>Dashboard</span>
                     </a>
-                    <a href="/admin/ganancias">
+                    <a class="active" href="/admin/ganancias">
                         <span class="material-icons">payments</span>
                         <span>Ganancias</span>
                     </a>
@@ -38,13 +38,8 @@
                         <span>Técnico</span>
                     </a>
                 </nav>
-
-                <form action="/login/logout" method="get">
-                    <button type="submit" class="logout-btn">
-                        <span class="logout-text">Cerrar Sesión</span>
-                    </button>
-                </form>
             </div>
+            <button id="logoutBtn" class="logout">Cerrar Sesión</button>
         </aside>
 
         <!-- Contenido -->
