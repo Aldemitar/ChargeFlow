@@ -123,7 +123,7 @@ async def tecnico_citas(
     Dashboard de citas — muestra las citas que crea un técnico.
     """
     return templates.TemplateResponse(
-        "tecnico/tecnicosCitas.html",
+        "tecnico/tecnicoCitas.html",
         {"request": request, "user": user}
     )
 
@@ -137,7 +137,7 @@ async def tecnico_clientes(
     Dashboard de clientes — muestra los clientes que crea un técnico.
     """
     return templates.TemplateResponse(
-        "tecnico/tecnicosClientes.html",
+        "tecnico/tecnicoClientes.html",
         {"request": request, "user": user}
     )
 
@@ -151,7 +151,7 @@ async def tecnico_vehiculos(
     Dashboard de vehiculos — muestra los vehiculos que crea un técnico.
     """
     return templates.TemplateResponse(
-        "tecnico/tecnicosVehiculos.html",
+        "tecnico/tecnicoVehiculos.html",
         {"request": request, "user": user}
     )
 
@@ -165,7 +165,7 @@ async def tecnico_baterias(
     Dashboard de baterías — muestra las baterías que crea un técnico.
     """
     return templates.TemplateResponse(
-        "tecnico/tecnicosBaterias.html",
+        "tecnico/tecnicoBaterias.html",
         {"request": request, "user": user}
     )
 
