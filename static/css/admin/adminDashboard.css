@@ -1,0 +1,260 @@
+/* ---- RESET ---- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f6f8f7;
+  color: #111;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ---- LAYOUT ---- */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 256px;
+  background-color: #111418;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+  width: 256px;
+  background-color: #111418;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 700px;
+  padding: 1rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYj7wb3NkQzBT0ehRhCh0f0Uir3-h48u5kNhq-EpCAn-V5KLy3xYV--Xffj44tjVJ-UdLWlATFTfY-0yxHksKvMuh563H16q819CWkXtrRRxTKL4fyT3Uo8WkBrJtTbK0ir1tUQPDCMpU8qqS19FyaTUII-TbJT4DMS6BUKzrWcDT0ebEpJNvsGfLYXlH_J5Ayugq5vVzfcV7YAaVzb9S7NTadFMVN_C6_sgg7OKbpK2M5syCp9zAtYKI6bGqMlg4b21lDW107Dc0w");
+  background-size: cover;
+}
+
+.info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info p {
+  font-size: 0.875rem;
+  color: #9dabb9;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  color: #ffffffb3;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+nav a:hover {
+  background: #ffffff1a;
+}
+
+nav a.active {
+  background: #39e07926;
+  color: #39e079;
+}
+
+.logout {
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #39e079;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout:hover {
+    background-color: rgba(57, 224, 121, 0.9);
+}
+
+/* ---- HEADER ---- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.25rem;
+  font-weight: 900;
+}
+
+.notification {
+  cursor: pointer;
+  position: relative;
+}
+
+.notification::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background: #39e079;
+  border-radius: 50%;
+}
+
+/* ---- GRID ---- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  grid-column: span 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card.wide {
+  grid-column: span 3;
+}
+
+.card.full {
+  grid-column: 1 / -1;
+}
+
+.card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #39e079;
+  margin: 0.25rem 0;
+}
+
+.change {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.change.up {
+  color: #16a34a;
+}
+
+.change.down {
+  color: #dc2626;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+/* ---- KPI ---- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.kpi {
+  background: #f6f8f7;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.kpi .label {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.kpi .number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+/* ---- CHARTS ---- */
+canvas {
+  max-height: 200px;
+}
+
+/* ---- MONTHS ---- */
+.months {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.months p {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.months small {
+  color: #666;
+}
