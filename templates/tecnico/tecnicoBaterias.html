@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gestión de Inventario de Baterías</title>
+    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoBaterias.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex min-h-screen w-full flex-col">
+        <div class="flex h-screen">
+            <aside class="sidebar">
+                <div class="sidebar-container">
+                    <div class="sidebar-content">
+                        <div class="user-info">
+                            <div class="user-avatar"></div>
+                            <div class="user-details">
+                                <h1 class="user-name">Admin</h1>
+                                <p class="user-email">admin@chargeflow.com</p>
+                            </div>
+                        </div>
+                        <div class="navigation">
+                            <a class="nav-item" href="../tecnico/tecnicoDashboard.html">
+                                <span class="material-symbols-outlined">dashboard</span>
+                                <p class="nav-text">Dashboard</p>
+                            </a>
+                            <a class="nav-item" href="../tecnico/tecnicoCitas.html">
+                                <span class="material-symbols-outlined">calendar_month</span>
+                                <p class="nav-text">Citas</p>
+                            </a>
+                            <a class="nav-item" href="../tecnico/tecnicoClientes.html">
+                                <span class="material-symbols-outlined">group</span>
+                                <p class="nav-text">Clientes</p>
+                            </a>
+                            <a class="nav-item" href="../tecnico/tecnicoVehiculos.html">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <p class="nav-text">Vehículos</p>
+                            </a>
+                            <a class="nav-item active" href="../tecnico/tecnicoBaterias.html">
+                                <span class="material-symbols-outlined">battery_full</span>
+                                <p class="nav-text">Baterías</p>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="logout-btn">
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <div class="header-section">
+                    <p class="page-title">Gestión de inventario de baterías</p>
+                    <button class="add-battery-btn">
+                        <span class="material-symbols-outlined btn-icon">add</span>
+                        <span class="btn-text">Añadir Batería</span>
+                    </button>
+                </div>
+                <div class="search-section">
+                    <label class="search-label">
+                        <div class="search-wrapper">
+                            <div class="search-icon">
+                                <span class="material-symbols-outlined">search</span>
+                            </div>
+                            <input class="search-input" placeholder="Buscar por ID, tipo o vehículo" value="" />
+                        </div>
+                    </label>
+                </div>
+                <div class="table-container">
+                    <div class="table-wrapper">
+                        <table class="batteries-table">
+                            <thead>
+                                <tr class="table-header">
+                                    <th class="table-head">ID de Batería</th>
+                                    <th class="table-head">Tipo</th>
+                                    <th class="table-head">Capacidad</th>
+                                    <th class="table-head">Estado</th>
+                                    <th class="table-head">Vehículo Asignado</th>
+                                    <th class="table-head actions-head">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <tr class="table-row">
+                                    <td class="table-cell">#8S2419</td>
+                                    <td class="table-cell">Litio-ion</td>
+                                    <td class="table-cell">75 kWh</td>
+                                    <td class="table-cell">
+                                        <span class="status-badge in-use">En uso</span>
+                                    </td>
+                                    <td class="table-cell">Tesla Model 3</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell">#JS1902</td>
+                                    <td class="table-cell">Níquel-metal hidruro</td>
+                                    <td class="table-cell">100 kWh</td>
+                                    <td class="table-cell">
+                                        <span class="status-badge available">Disponible</span>
+                                    </td>
+                                    <td class="table-cell">Sin asignar</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell">#92JS19</td>
+                                    <td class="table-cell">Litio-ion</td>
+                                    <td class="table-cell">82 kWh</td>
+                                    <td class="table-cell">
+                                        <span class="status-badge maintenance">En mantenimiento</span>
+                                    </td>
+                                    <td class="table-cell">Nissan Leaf</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell">#52SJ12</td>
+                                    <td class="table-cell">Plomo-ácido</td>
+                                    <td class="table-cell">50 kWh</td>
+                                    <td class="table-cell">
+                                        <span class="status-badge available">Disponible</span>
+                                    </td>
+                                    <td class="table-cell">Sin asignar</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell">#K28S92</td>
+                                    <td class="table-cell">Litio-ion</td>
+                                    <td class="table-cell">90 kWh</td>
+                                    <td class="table-cell">
+                                        <span class="status-badge in-use">En uso</span>
+                                    </td>
+                                    <td class="table-cell">Ford Mustang Mach-E</td>
+                                    <td class="table-cell actions-cell">
+                                        <div class="actions-container">
+                                            <button class="action-btn edit-btn">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="action-btn delete-btn">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../../static/js/tecnico/tecnicoBaterias.js"></script>
+</body>
+
+</html>
