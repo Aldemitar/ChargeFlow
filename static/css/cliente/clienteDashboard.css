@@ -1,0 +1,734 @@
+/* Estilos para los iconos de Material Symbols */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: inherit;
+}
+
+/* Base Styles */
+.dashboard-body {
+    background-color: #f6f8f7;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+.dark .dashboard-body {
+    background-color: #122017;
+}
+
+.dashboard-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+}
+
+/* Header Styles */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 2.5rem;
+    position: sticky;
+    top: 0;
+    background-color: #f6f8f7;
+    z-index: 10;
+}
+
+.dark .dashboard-header {
+    border-bottom-color: #283039;
+    background-color: #122017;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #1f2937;
+}
+
+.dark .header-left {
+    color: white;
+}
+
+.logo-icon {
+    font-family: 'Material Symbols Outlined';
+    color: #39E079;
+    font-size: 1.875rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+.header-right {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Avatar & Dropdown */
+.avatar-container {
+    position: relative;
+}
+
+.avatar-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    width: 3rem;
+    height: 3rem;
+    background-color: #e5e7eb;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.dark .avatar-button {
+    background-color: #283039;
+}
+
+.avatar-button:focus {
+    outline: 2px solid #39E079;
+    outline-offset: 2px;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_y0ozM8pojBFRlSbhqxorSgz3wBEl5hVPsE78gTmOIeAORCQiFhiCPyJbIvlZOnPOIPg4i5fFoA_Sb-hpcI7tLeI7opxhQBJgUglWsUacBFmcQNgsI_60Ej4fPm-9lexMAeRMocxwfLMSVBr9tmmiYNzlhaz9Jbh7OmIvlt3FBTtD1Mk997q3ONZqMPGc6hrFIKMUOe68rdPNYqs5OH-JPuQQmXMcFFYYF_DlHqFeiKiL2wzSZlAjkjAdU8k4WzAKAqZAoJil31Ii');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    margin-top: 0.5rem;
+    width: 12rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    padding: 0.25rem 0;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
+    pointer-events: none;
+}
+
+.dark .dropdown-menu {
+    background-color: #1a222c;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.dark .dropdown-item {
+    color: #d1d5db;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .dropdown-item:hover {
+    background-color: #374151;
+}
+
+/* Main Content */
+.dashboard-main {
+    padding: 2rem 1rem;
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+    .dashboard-main {
+        padding: 2rem 2.5rem;
+    }
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 72rem;
+    margin: 0 auto;
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Welcome Section */
+.welcome-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.welcome-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 18rem;
+}
+
+.welcome-title {
+    color: #1f2937;
+    font-size: 2.25rem;
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -0.033em;
+}
+
+.dark .welcome-title {
+    color: white;
+}
+
+.welcome-subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.dark .welcome-subtitle {
+    color: #9dabb9;
+}
+
+/* Section Titles */
+.section-title {
+    color: #1f2937;
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    padding: 0 1rem 0.75rem;
+    margin-top: 2rem;
+}
+
+.dark .section-title {
+    color: white;
+}
+
+/* Vehicles Grid */
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+@media (min-width: 640px) {
+    .vehicles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .vehicles-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Vehicle Cards */
+.vehicle-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.dark .vehicle-card {
+    background-color: #1a222c;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.vehicle-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.vehicle-card:nth-child(1) .vehicle-image {
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjfTItNivYfWBhbhMtTvHTZNbsw5r8gaJtp7KCbT33JLI1kNW3CJSpd35dI38NICW1SYl2Hh65DnB6xDniuwPIh0Wwf9CG8y4Fj2QvA-tqx8n0exu3OMbTCD97Ptd_7Utu7lNkoeo4_LsZIJjiYoE9eAIjLdiI7z1ANMVHWPD9itNu2GVBj-DAg1nJ5ORuxveiaR0SsCnEPccakQ5URg42NYU2fly2A4awYaOGp4r1ChgWg8WBaEHJCPcKOHJXHX5tAZHTtl7uF2XC');
+}
+
+.vehicle-card:nth-child(2) .vehicle-image {
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA8j_BjY5YF0431powKwd4EapZk7YLFRWLK5S0YOpG0Rklruq9LxpjDt0C01rTZXl-KJo4jcr98nwI8mXmPOiSHdKP7ZPMpM538-9HZTm2zUfNHRLxRxhDqBtpT-qDoCOlCmHKolVQkOlkIPwlKO90srKJPtGgqLGCRIEWc4rydWK4YfTT3gAjl_ebUmqbjyopy-diMPP0uoJseAyyocLCZDlDqggsA8kvbK3h_ic8AOMQehrhw18Qg5LaXS0RBlbAdUDApWAdlyqPP');
+}
+
+.vehicle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.vehicle-name {
+    color: #1f2937;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.dark .vehicle-name {
+    color: white;
+}
+
+.vehicle-status {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.dark .vehicle-status {
+    color: #9dabb9;
+}
+
+/* Battery Info */
+.battery-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.battery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.battery-label {
+    color: #4b5563;
+}
+
+.dark .battery-label {
+    color: #d1d5db;
+}
+
+.battery-percentage {
+    font-weight: 600;
+}
+
+.battery-card:nth-child(1) .battery-percentage {
+    color: #10b981;
+}
+
+.battery-card:nth-child(2) .battery-percentage {
+    color: #f59e0b;
+}
+
+.battery-bar {
+    width: 100%;
+    height: 0.625rem;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+}
+
+.dark .battery-bar {
+    background-color: #374151;
+}
+
+.battery-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+
+.vehicle-card:nth-child(1) .battery-fill {
+    background-color: #10b981;
+}
+
+.vehicle-card:nth-child(2) .battery-fill {
+    background-color: #f59e0b;
+}
+
+/* Action Cards */
+.add-vehicle-card,
+.view-all-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 2px dashed #d1d5db;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.dark .add-vehicle-card,
+.dark .view-all-card {
+    background-color: #1a222c;
+    border-color: #4b5563;
+}
+
+.add-vehicle-card:hover,
+.view-all-card:hover {
+    border-color: #39E079;
+}
+
+.add-icon,
+.view-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+}
+
+.dark .add-icon,
+.dark .view-icon {
+    background-color: #374151;
+}
+
+.add-icon .material-symbols-outlined,
+.view-icon .material-symbols-outlined {
+    color: #6b7280;
+    font-size: 2rem;
+}
+
+.dark .add-icon .material-symbols-outlined,
+.dark .view-icon .material-symbols-outlined {
+    color: #9ca3af;
+}
+
+.add-text,
+.view-text {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.dark .add-text,
+.dark .view-text {
+    color: #d1d5db;
+}
+
+/* Buttons */
+.primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    height: 2.5rem;
+    padding: 0 1.25rem;
+    background-color: #39E079;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.primary-button:hover {
+    background-color: rgba(57, 224, 121, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(57, 224, 121, 0.3);
+}
+
+/* Appointments & History */
+.appointments-container,
+.history-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.dark .appointments-container,
+.dark .history-container {
+    background-color: #1a222c;
+}
+
+.appointments-list,
+.history-list {
+    list-style: none;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .appointments-list,
+.dark .history-list {
+    border-color: #374151;
+}
+
+.appointment-item,
+.history-item {
+    padding: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .appointment-item,
+.dark .history-item {
+    border-color: #374151;
+}
+
+.appointment-item:last-child,
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.appointment-content,
+.history-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.date-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+}
+
+.appointment-item .date-badge {
+    background-color: rgba(57, 224, 121, 0.1);
+}
+
+.dark .appointment-item .date-badge {
+    background-color: rgba(57, 224, 121, 0.2);
+}
+
+.history-item .date-badge {
+    background-color: #f3f4f6;
+}
+
+.dark .history-item .date-badge {
+    background-color: #374151;
+}
+
+.date-month {
+    color: #39E079;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.date-day {
+    color: #39E079;
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+
+.history-item .date-month {
+    color: #4b5563;
+}
+
+.dark .history-item .date-month {
+    color: #d1d5db;
+}
+
+.history-item .date-day {
+    color: #1f2937;
+}
+
+.dark .history-item .date-day {
+    color: #e5e7eb;
+}
+
+.appointment-details,
+.history-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.appointment-title,
+.history-title {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.dark .appointment-title,
+.dark .history-title {
+    color: white;
+}
+
+.appointment-time,
+.history-time {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.dark .appointment-time,
+.dark .history-time {
+    color: #9ca3af;
+}
+
+.appointment-info,
+.history-info {
+    text-align: right;
+}
+
+.appointment-price,
+.history-price {
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.dark .appointment-price,
+.dark .history-price {
+    color: white;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-confirmed {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.dark .status-confirmed {
+    background-color: #14532d;
+    color: #86efac;
+}
+
+.status-in-progress {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-in-progress {
+    background-color: #78350f;
+    color: #fcd34d;
+}
+
+.status-pending {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.dark .status-pending {
+    background-color: #1e3a8a;
+    color: #93c5fd;
+}
+
+.status-completed {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.dark .status-completed {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+/* History Actions */
+.history-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.history-actions .primary-button {
+    width: auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .dashboard-main {
+        padding: 1rem;
+    }
+
+    .content-container {
+        padding: 0 1rem;
+    }
+
+    .vehicles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .appointment-item,
+    .history-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .appointment-info,
+    .history-info {
+        text-align: left;
+        width: 100%;
+    }
+}
