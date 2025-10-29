@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from datetime import date, datetime
+from datetime import date, datetime  # ← IMPORTANTE: Agregar datetime
 
 from utils.auth import require_roles
 from utils.connection_db import get_session
@@ -78,12 +78,19 @@ async def dashboard_tecnico(
         elif c.estado == EstadoCita.COMPLETADA:
             completadas.append(c)
 
-        c_fecha = c.fecha.date() if isinstance(c.fecha, datetime) else c.fecha
+        # Manejo seguro de fechas
+        if isinstance(c.fecha, datetime):
+            c_fecha = c.fecha.date()
+        else:
+            c_fecha = c.fecha
+
         if c_fecha == hoy:
             citas_hoy_count += 1
 
-        if c.estado == EstadoCita.COMPLETADA and c_fecha.month == hoy.month and c_fecha.year == hoy.year:
-            ingresos_mes += c.costo
+        if (c.estado == EstadoCita.COMPLETADA and 
+            c_fecha.month == hoy.month and 
+            c_fecha.year == hoy.year):
+            ingresos_mes += c.costo or 0
 
         if c.estado != EstadoCita.COMPLETADA:
             vehiculos_taller_count += 1
@@ -151,7 +158,7 @@ async def tecnico_baterias(
         {"request": request, "tecnico": tecnico}
     )
 
-# Templates de cliente (elimina el duplicado)
+# Templates de cliente
 @router.get("/cliente/dashboard", response_class=HTMLResponse)
 async def cliente_dashboard(
     request: Request,
