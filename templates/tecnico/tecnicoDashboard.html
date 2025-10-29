@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ChargeFlow Dashboard</title>
+    <link rel="stylesheet" href="/static/css/tecnico/tecnicoDashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="flex flex-1">
+            <aside class="sidebar">
+                <div class="sidebar-container">
+                    <div class="sidebar-content">
+                        <div class="user-info">
+                            <div class="user-avatar"></div>
+                            <div class="user-details">
+                                <h1 class="user-name">{{ tecnico.nombre }} {{ tecnico.apellido }}</h1>
+                                <p class="user-email">{{ tecnico.email }}</p>
+                            </div>
+                        </div>
+                        <div class="navigation">
+                            <a class="nav-item active" href="/tecnico/dashboard">
+                                <span class="material-symbols-outlined">dashboard</span>
+                                <p class="nav-text">Dashboard</p>
+                            </a>
+                            <a class="nav-item" href="/tecnico/citas">
+                                <span class="material-symbols-outlined">calendar_month</span>
+                                <p class="nav-text">Citas</p>
+                            </a>
+                            <a class="nav-item" href="/tecnico/clientes">
+                                <span class="material-symbols-outlined">group</span>
+                                <p class="nav-text">Clientes</p>
+                            </a>
+                            <a class="nav-item" href="/tecnico/vehiculos">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <p class="nav-text">Vehículos</p>
+                            </a>
+                            <a class="nav-item" href="/tecnico/baterias">
+                                <span class="material-symbols-outlined">battery_full</span>
+                                <p class="nav-text">Baterías</p>
+                            </a>
+                        </div>
+                    </div>
+                    <form action="/login/logout" method="get">
+                        <button type="submit" class="logout-btn">
+                            <span class="logout-text">Cerrar Sesión</span>
+                        </button>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="content-container">
+                    <h2 class="page-title">Dashboard de Operaciones</h2>
+                    <br>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <p class="stat-label">Citas de Hoy</p>
+                            <p class="stat-value">{{ citas_hoy }}</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-label">Ingresos del Mes</p>
+                            <p class="stat-value">${{ ingresos_mes }}</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-label">Total de Clientes</p>
+                            <p class="stat-value">{{ total_clientes }}</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-label">Vehículos en Taller</p>
+                            <p class="stat-value">{{ vehiculos_taller }}</p>
+                        </div>
+                    </div>
+
+                    <div class="tasks-grid">
+                        <!-- Pendientes -->
+                        <div class="task-column">
+                            <h3 class="column-title">Pendientes</h3>
+                            <div class="tasks-list">
+                                {% for cita in citas_pendientes %}
+                                <div class="task-item pending">
+                                    <div class="task-header">
+                                        <div>
+                                            <p class="task-name">{{ cita.vehiculo.marca.value }} {{ cita.vehiculo.modelo }}</p>
+                                            <p class="task-client">Cliente: {{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</p>
+                                        </div>
+                                        <span class="task-time">{{ cita.hora }}</span>
+                                    </div>
+                                    <div class="task-footer">
+                                        <p class="task-cost">Costo: ${{ cita.costo }}</p>
+                                        <span class="task-tag today">Hoy</span>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <p class="no-tasks">No hay citas pendientes.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- En progreso -->
+                        <div class="task-column">
+                            <h3 class="column-title">En Progreso</h3>
+                            <div class="tasks-list">
+                                {% for cita in citas_en_progreso %}
+                                <div class="task-item in-progress">
+                                    <div class="task-header">
+                                        <div>
+                                            <p class="task-name">{{ cita.vehiculo.marca.value }} {{ cita.vehiculo.modelo }}</p>
+                                            <p class="task-client">Cliente: {{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</p>
+                                        </div>
+                                        <span class="task-time">{{ cita.hora }}</span>
+                                    </div>
+                                    <div class="task-footer">
+                                        <p class="task-cost">Costo: ${{ cita.costo }}</p>
+                                        <span class="task-tag today">Hoy</span>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <p class="no-tasks">No hay citas en progreso.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Completadas -->
+                        <div class="task-column">
+                            <h3 class="column-title">Completadas</h3>
+                            <div class="tasks-list">
+                                {% for cita in citas_completadas %}
+                                <div class="task-item completed">
+                                    <div class="task-header">
+                                        <div>
+                                            <p class="task-name">{{ cita.vehiculo.marca.value }} {{ cita.vehiculo.modelo }}</p>
+                                            <p class="task-client">Cliente: {{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</p>
+                                        </div>
+                                        <span class="task-time">{{ cita.hora }}</span>
+                                    </div>
+                                    <div class="task-footer">
+                                        <p class="task-cost">Costo: ${{ cita.costo }}</p>
+                                        <span class="task-tag yesterday">{{ cita.fecha }}</span>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <p class="no-tasks">No hay citas completadas.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/static/js/tecnico/tecnicoDashboard.js"></script>
+</body>
+</html>
