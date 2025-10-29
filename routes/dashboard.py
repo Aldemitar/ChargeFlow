@@ -48,7 +48,7 @@ async def admin_tecnicos(
     admin = user
 
     return templates.TemplateResponse(
-        "admin/tecnicosAdmin.html",
+        "admin/tecnicoAdmin.html",
         {"request": request, "admin": admin}
     )
 
