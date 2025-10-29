@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ChargeFlow - Mi Cuenta</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4CAF50",
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#122017",
+                        "text-primary-light": "#212529",
+                        "text-primary-dark": "#F8F9FA",
+                        "text-secondary-light": "#6C757D",
+                        "text-secondary-dark": "#A9B1B8",
+                        "border-light": "#E9ECEF",
+                        "border-dark": "#343A40",
+                        "success": "#28A745",
+                        "error": "#DC3545",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="../../static/css/cliente/perfilCliente.css">
+</head>
+
+<body class="account-page">
+    <!-- Navegacion -->
+    <nav class="account-nav">
+        <div class="nav-left">
+            <a class="back-button" href="../cliente/clienteDashboard.html" aria-label="Volver a Dashboard">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1 class="nav-title">Dashboard</h1>
+        </div>
+        <div class="nav-right">
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="account-main">
+        <div class="account-container">
+            <div class="account-card">
+                <!-- Perfil -->
+                <div class="profile-section">
+                    <h2 class="section-title">Foto de Perfil</h2>
+                    <div class="profile-picture-container">
+                        <div class="profile-picture" data-alt="User's current profile picture"></div>
+                        <button class="edit-profile-button" aria-label="Cambiar foto de perfil">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                    </div>
+                    <p class="profile-help-text">JPG o PNG, máx. 5MB</p>
+                </div>
+
+                <!-- Cambiar contraseña -->
+                <div class="password-section">
+                    <h2 class="section-title">Cambiar Contraseña</h2>
+                    <p class="section-description">Para mayor seguridad, elige una contraseña fuerte que no uses en
+                        otros sitios.</p>
+
+                    <form class="password-form" id="passwordForm">
+                        <!-- Contraseña actual -->
+                        <div class="input-group">
+                            <label class="input-label" for="current-password">Contraseña Actual</label>
+                            <div class="password-input-container">
+                                <input class="password-input" id="current-password" name="current-password"
+                                    type="password" placeholder="••••••••" />
+                                <button class="password-toggle" type="button" data-target="current-password">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Nueva contraseña -->
+                        <div class="input-group">
+                            <label class="input-label" for="new-password">Nueva Contraseña</label>
+                            <div class="password-input-container">
+                                <input class="password-input" id="new-password" name="new-password" type="password"
+                                    placeholder="••••••••" />
+                                <button class="password-toggle" type="button" data-target="new-password">
+                                    <span class="material-symbols-outlined">visibility_off</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirmar contraseña -->
+                        <div class="input-group">
+                            <label class="input-label" for="confirm-password">Confirmar Nueva Contraseña</label>
+                            <div class="password-input-container">
+                                <input class="password-input" id="confirm-password" name="confirm-password"
+                                    type="password" placeholder="••••••••" />
+                                <button class="password-toggle" type="button" data-target="confirm-password">
+                                    <span class="material-symbols-outlined">visibility_off</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Acciones -->
+                        <div class="form-actions">
+                            <button class="primary-button" type="submit">
+                                <span>Guardar Cambios</span>
+                            </button>
+                            <button class="secondary-button" type="button" id="cancelButton">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../static/js/cliente/perfilCliente.js"></script>
+</body>
+
+</html>
