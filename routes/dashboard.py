@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from datetime import date
+from datetime import date, datetime
 
 from utils.auth import require_roles
 from utils.connection_db import get_session
@@ -18,9 +18,6 @@ async def admin_dashboard(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
-    """
-    Dashboard del administrador — muestra acceso a paneles globales.
-    """
     return templates.TemplateResponse(
         "admin/adminDashboard.html",
         {"request": request, "user": user}
@@ -31,9 +28,6 @@ async def admin_ganancias(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
-    """
-    Dashboard de ganancias — muestra los ingresos del taller.
-    """
     return templates.TemplateResponse(
         "admin/gananciasAdmin.html",
         {"request": request, "user": user}
@@ -44,14 +38,10 @@ async def admin_tecnicos(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
-    """
-    Dashboard de técnicos — muestra los técnicos del taller.
-    """
     return templates.TemplateResponse(
         "admin/tecnicosAdmin.html",
         {"request": request, "user": user}
     )
-
 
 # Templates de técnico
 @router.get("/tecnico/dashboard", response_class=HTMLResponse)
@@ -119,12 +109,10 @@ async def tecnico_citas(
     user=Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
-    """
-    Dashboard de citas — muestra las citas que crea un técnico.
-    """
+    tecnico = user
     return templates.TemplateResponse(
         "tecnico/tecnicoCitas.html",
-        {"request": request, "user": user}
+        {"request": request, "tecnico": tecnico}
     )
 
 @router.get("/tecnico/clientes", response_class=HTMLResponse)
@@ -133,12 +121,10 @@ async def tecnico_clientes(
     user=Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
-    """
-    Dashboard de clientes — muestra los clientes que crea un técnico.
-    """
+    tecnico = user
     return templates.TemplateResponse(
         "tecnico/tecnicoClientes.html",
-        {"request": request, "user": user}
+        {"request": request, "tecnico": tecnico}
     )
 
 @router.get("/tecnico/vehiculos", response_class=HTMLResponse)
@@ -147,12 +133,10 @@ async def tecnico_vehiculos(
     user=Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
-    """
-    Dashboard de vehiculos — muestra los vehiculos que crea un técnico.
-    """
+    tecnico = user
     return templates.TemplateResponse(
         "tecnico/tecnicoVehiculos.html",
-        {"request": request, "user": user}
+        {"request": request, "tecnico": tecnico}
     )
 
 @router.get("/tecnico/baterias", response_class=HTMLResponse)
@@ -161,39 +145,19 @@ async def tecnico_baterias(
     user=Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
-    """
-    Dashboard de baterías — muestra las baterías que crea un técnico.
-    """
+    tecnico = user
     return templates.TemplateResponse(
         "tecnico/tecnicoBaterias.html",
-        {"request": request, "user": user}
+        {"request": request, "tecnico": tecnico}
     )
 
-
-# Templates de cliente
+# Templates de cliente (elimina el duplicado)
 @router.get("/cliente/dashboard", response_class=HTMLResponse)
 async def cliente_dashboard(
     request: Request,
     user=Depends(require_roles(RolUsuario.CLIENTE)),
     session: AsyncSession = Depends(get_session)
 ):
-    """
-    Dashboard del cliente — muestra sus datos y citas.
-    """
-    return templates.TemplateResponse(
-        "cliente/clienteDashboard.html",
-        {"request": request, "user": user}
-    )
-
-@router.get("/cliente/dashboard", response_class=HTMLResponse)
-async def cliente_dashboard(
-    request: Request,
-    user=Depends(require_roles(RolUsuario.CLIENTE)),
-    session: AsyncSession = Depends(get_session)
-):
-    """
-    Dashboard del cliente — muestra sus datos y citas.
-    """
     return templates.TemplateResponse(
         "cliente/clienteDashboard.html",
         {"request": request, "user": user}
@@ -205,9 +169,6 @@ async def cliente_perfil(
     user=Depends(require_roles(RolUsuario.CLIENTE)),
     session: AsyncSession = Depends(get_session)
 ):
-    """
-    Perfil del cliente — permite cambiar contraseña y foto de perfil
-    """
     return templates.TemplateResponse(
         "cliente/perfilCliente.html",
         {"request": request, "user": user}
