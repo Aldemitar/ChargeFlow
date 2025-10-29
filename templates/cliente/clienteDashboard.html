@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ChargeFlow Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E079",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#122017"
+                    },
+                    fontFamily: {
+                        display: "Inter"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="../../static/css/cliente/clienteDashboard.css">
+</head>
+
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <div class="layout-container">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <span class="logo-icon">electric_bolt</span>
+                    <h2 class="logo-text">ChargeFlow</h2>
+                </div>
+                <div class="header-right">
+                    <div class="avatar-container">
+                        <button class="avatar-button" id="avatar-button">
+                            <div class="avatar-image" data-alt="User profile picture"></div>
+                        </button>
+                        <div class="dropdown-menu" id="avatar-dropdown">
+                            <a class="dropdown-item" href="../cliente/perfilCliente.html">Mi Perfil</a>
+                            <a class="dropdown-item" href="../login/login.html">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main -->
+            <main class="dashboard-main">
+                <div class="content-container">
+
+                    <div class="welcome-section">
+                        <div class="welcome-content">
+                            <p class="welcome-title">Bienvenido, Juan Pérez</p>
+                            <p class="welcome-subtitle">Gestiona tus vehículos y citas de mantenimiento</p>
+                        </div>
+                    </div>
+
+                    <!-- Vehiculos -->
+                    <h2 class="section-title">Mis Vehículos</h2>
+                    <div class="vehicles-grid">
+
+                        <!-- Vehiculo 1 -->
+                        <div class="vehicle-card">
+                            <div class="vehicle-image" data-alt="Tesla Model 3"></div>
+                            <div class="vehicle-info">
+                                <p class="vehicle-name">Tesla Model 3 de Juan</p>
+                                <p class="vehicle-status">Estacionado</p>
+                            </div>
+                            <div class="battery-info">
+                                <div class="battery-header">
+                                    <span class="battery-label">Batería</span>
+                                    <span class="battery-percentage">85%</span>
+                                </div>
+                                <div class="battery-bar">
+                                    <div class="battery-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <button class="primary-button">Ver Detalles</button>
+                        </div>
+
+                        <!-- Vehiculo 2 -->
+                        <div class="vehicle-card">
+                            <div class="vehicle-image" data-alt="Audi e-tron"></div>
+                            <div class="vehicle-info">
+                                <p class="vehicle-name">Audi e-tron de Juan</p>
+                                <p class="vehicle-status">Cargando</p>
+                            </div>
+                            <div class="battery-info">
+                                <div class="battery-header">
+                                    <span class="battery-label">Batería</span>
+                                    <span class="battery-percentage">40%</span>
+                                </div>
+                                <div class="battery-bar">
+                                    <div class="battery-fill" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <button class="primary-button">Ver Detalles</button>
+                        </div>
+
+                        <!-- Añadir Vehiculo -->
+                        <div class="add-vehicle-card">
+                            <div class="add-icon">
+                                <span class="material-symbols-outlined">add</span>
+                            </div>
+                            <p class="add-text">Agrega un nuevo vehículo</p>
+                        </div>
+
+                        <!-- Ver todos los vehículos -->
+                        <div class="view-all-card">
+                            <div class="view-icon">
+                                <span class="material-symbols-outlined">electric_car</span>
+                            </div>
+                            <p class="view-text">Ver todos tus vehículos</p>
+                        </div>
+                    </div>
+
+                    <!-- Citas -->
+                    <h2 class="section-title">Próximas Citas</h2>
+                    <div class="appointments-container">
+                        <ul class="appointments-list" id="appointments-list">
+                        </ul>
+                    </div>
+
+                    <!-- Historial -->
+                    <h2 class="section-title">Historial de Citas</h2>
+                    <div class="history-container">
+                        <ul class="history-list" id="history-list">
+                        </ul>
+                        <div class="history-actions">
+                            <button class="primary-button" id="view-all-history">Ver todo el Historial</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../../static/js/cliente/clienteDashboard.js"></script>
+</body>
+
+</html>
