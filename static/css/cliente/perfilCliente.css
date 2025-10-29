@@ -1,0 +1,427 @@
+/* Estilos para los iconos de Material Symbols */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: inherit;
+}
+
+/* Base Styles */
+.account-page {
+    background-color: #F8F9FA;
+    font-family: 'Inter', sans-serif;
+    color: #212529;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dark .account-page {
+    background-color: #122017;
+    color: #F8F9FA;
+}
+
+/* Navigation */
+.account-nav {
+    background-color: white;
+    padding: 1rem;
+    border-bottom: 1px solid #E9ECEF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dark .account-nav {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: #343A40;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.back-button {
+    padding: 0.5rem;
+    color: #6C757D;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.dark .back-button {
+    color: #A9B1B8;
+}
+
+.back-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark .back-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.dark .nav-title {
+    color: #F8F9FA;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Main Content */
+.account-main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+@media (min-width: 640px) {
+    .account-main {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .account-main {
+        padding: 2.5rem;
+    }
+}
+
+.account-container {
+    width: 100%;
+    max-width: 32rem;
+    margin: 0 auto;
+}
+
+.account-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #E9ECEF;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.dark .account-card {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: #343A40;
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+}
+
+.profile-picture-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.profile-picture {
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA8oKalR7slXkH_RA5UyOGLcDD9ydA95a5_zR1jiWAxbWRG7gPU76iNxW6TKaO3mKl2QGpt4Oy1z4KIfTDXcy9A3k4fJLD1F3jK8woSn3cBNyIfsju1e6ExKyzp03vUGk3-c2-o8JS12vJauWUWEruoyzPM4vu0XYdPSUEdnmti1wabEMXUqRBFwFz228WOUytzegxXx66MyVlaKTxmHcsBJA6nnTu3qNWDT4rTLcGn4JMZJDV4hy8EUN9N71l4D7preXJbCx_OUSJj');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    width: 8rem;
+    height: 8rem;
+}
+
+.edit-profile-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-profile-button:hover {
+    background-color: rgba(76, 175, 80, 0.9);
+}
+
+.edit-profile-button:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+.dark .edit-profile-button:focus {
+    outline-offset: 2px;
+}
+
+.profile-help-text {
+    font-size: 0.875rem;
+    color: #6C757D;
+}
+
+.dark .profile-help-text {
+    color: #A9B1B8;
+}
+
+/* Password Section */
+.password-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-description {
+    font-size: 1rem;
+    color: #6C757D;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.dark .section-description {
+    color: #A9B1B8;
+}
+
+.password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #212529;
+}
+
+.dark .input-label {
+    color: #F8F9FA;
+}
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input {
+    width: 100%;
+    padding: 0.75rem;
+    padding-right: 3rem;
+    background-color: #F8F9FA;
+    border: 1px solid #E9ECEF;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.dark .password-input {
+    background-color: #122017;
+    border-color: #343A40;
+    color: #F8F9FA;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: #6C757D;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.dark .password-toggle {
+    color: #A9B1B8;
+}
+
+.password-toggle:hover {
+    color: #4CAF50;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+@media (min-width: 640px) {
+    .form-actions {
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+}
+
+.primary-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 3rem;
+    padding: 0 1.5rem;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+@media (min-width: 640px) {
+    .primary-button {
+        width: auto;
+    }
+}
+
+.primary-button:hover {
+    background-color: rgba(76, 175, 80, 0.9);
+    transform: translateY(-1px);
+}
+
+
+
+.secondary-button {
+    width: 100%;
+    height: 3rem;
+    padding: 0 1.5rem;
+    background-color: transparent;
+    color: #6C757D;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+@media (min-width: 640px) {
+    .secondary-button {
+        width: auto;
+    }
+}
+
+.secondary-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark .secondary-button {
+    color: #A9B1B8;
+}
+
+.dark .secondary-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Success and Error States */
+.input-error .password-input {
+    border-color: #DC3545;
+}
+
+.input-success .password-input {
+    border-color: #28A745;
+}
+
+.error-message {
+    color: #DC3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.success-message {
+    color: #28A745;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Loading State */
+.button-loading {
+    position: relative;
+    color: transparent;
+}
+
+.button-loading::after {
+    content: "";
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.625rem;
+    margin-top: -0.625rem;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .account-card {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .profile-picture {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .edit-profile-button {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+}
