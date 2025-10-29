@@ -24,179 +24,180 @@
                         </div>
                     </div>
                     <div class="navigation">
-                        <a class="nav-item" href="../tecnico/tecnicoDashboard.html">
+                        <a class="nav-item" href="/tecnico/dashboard">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p class="nav-text">Dashboard</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoCitas.html">
+                        <a class="nav-item" href="/tecnico/citas">
                             <span class="material-symbols-outlined">calendar_month</span>
                             <p class="nav-text">Citas</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoClientes.html">
+                        <a class="nav-item" href="/tecnico/clientes">
                             <span class="material-symbols-outlined">group</span>
                             <p class="nav-text">Clientes</p>
                         </a>
-                        <a class="nav-item active" href="../tecnico/tecnicoVehiculos.html">
+                        <a class="nav-item active" href="/tecnico/vehiculos">
                             <span class="material-symbols-outlined">directions_car</span>
                             <p class="nav-text">Vehículos</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoBaterias.html">
+                        <a class="nav-item" href="/tecnico/baterias">
                             <span class="material-symbols-outlined">battery_full</span>
                             <p class="nav-text">Baterías</p>
                         </a>
                     </div>
                 </div>
-                <button class="logout-btn">
-                    <span class="logout-text">Cerrar Sesión</span>
-                </button>
             </div>
-        </aside>
-        <div class="main-container">
-            <main class="main-content">
-                <div class="content-header">
-                    <p class="page-title">Gestión de Vehículos</p>
-                </div>
-                <div class="search-section">
-                    <div class="search-container">
-                        <label class="search-label">
-                            <div class="search-wrapper">
-                                <div class="search-icon">
-                                    <span class="material-symbols-outlined">search</span>
-                                </div>
-                                <input class="search-input" placeholder="Buscar por placa, marca, modelo o cliente"
-                                    value="" />
+            <button class="logout-btn">
+                <span class="logout-text">Cerrar Sesión</span>
+            </button>
+    </div>
+    </aside>
+    <div class="main-container">
+        <main class="main-content">
+            <div class="content-header">
+                <p class="page-title">Gestión de Vehículos</p>
+            </div>
+            <div class="search-section">
+                <div class="search-container">
+                    <label class="search-label">
+                        <div class="search-wrapper">
+                            <div class="search-icon">
+                                <span class="material-symbols-outlined">search</span>
                             </div>
-                        </label>
-                    </div>
-                    <div class="add-button-container">
-                        <button class="add-vehicle-btn" id="addVehicleBtn">
-                            <span class="material-symbols-outlined">add</span>
-                            <span class="btn-text">Añadir Vehículo</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="table-section">
-                    <div class="table-wrapper">
-                        <table class="vehicles-table">
-                            <thead>
-                                <tr class="table-header">
-                                    <th class="table-head">Placa</th>
-                                    <th class="table-head">Marca</th>
-                                    <th class="table-head">Modelo</th>
-                                    <th class="table-head">Año</th>
-                                    <th class="table-head">Cliente Asociado</th>
-                                    <th class="table-head">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-body">
-                                <tr class="table-row">
-                                    <td class="table-cell">ABC123</td>
-                                    <td class="table-cell">Chevrolet</td>
-                                    <td class="table-cell">Bolt EV</td>
-                                    <td class="table-cell">2023</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Juan Pérez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">DEF456</td>
-                                    <td class="table-cell">Tesla</td>
-                                    <td class="table-cell">Model S</td>
-                                    <td class="table-cell">2022</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">María García</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">GHI789</td>
-                                    <td class="table-cell">Nissan</td>
-                                    <td class="table-cell">Leaf</td>
-                                    <td class="table-cell">2021</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Carlos Sánchez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">JKL012</td>
-                                    <td class="table-cell">Audi</td>
-                                    <td class="table-cell">e-tron</td>
-                                    <td class="table-cell">2023</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Ana Martínez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">MNO345</td>
-                                    <td class="table-cell">Ford</td>
-                                    <td class="table-cell">Mustang Mach-E</td>
-                                    <td class="table-cell">2022</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Luis Rodríguez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="pagination-container">
-                        <span class="pagination-info">Mostrando 1-5 de 50 vehículos</span>
-                        <div class="pagination-controls">
-                            <button class="pagination-btn">Anterior</button>
-                            <button class="pagination-btn">Siguiente</button>
+                            <input class="search-input" placeholder="Buscar por placa, marca, modelo o cliente"
+                                value="" />
                         </div>
+                    </label>
+                </div>
+                <div class="add-button-container">
+                    <button class="add-vehicle-btn" id="addVehicleBtn">
+                        <span class="material-symbols-outlined">add</span>
+                        <span class="btn-text">Añadir Vehículo</span>
+                    </button>
+                </div>
+            </div>
+            <div class="table-section">
+                <div class="table-wrapper">
+                    <table class="vehicles-table">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="table-head">Placa</th>
+                                <th class="table-head">Marca</th>
+                                <th class="table-head">Modelo</th>
+                                <th class="table-head">Año</th>
+                                <th class="table-head">Cliente Asociado</th>
+                                <th class="table-head">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            <tr class="table-row">
+                                <td class="table-cell">ABC123</td>
+                                <td class="table-cell">Chevrolet</td>
+                                <td class="table-cell">Bolt EV</td>
+                                <td class="table-cell">2023</td>
+                                <td class="table-cell">
+                                    <a class="client-link" href="#">Juan Pérez</a>
+                                </td>
+                                <td class="table-cell actions-cell">
+                                    <div class="actions-container">
+                                        <button class="action-btn edit-btn">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="action-btn delete-btn">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-cell">DEF456</td>
+                                <td class="table-cell">Tesla</td>
+                                <td class="table-cell">Model S</td>
+                                <td class="table-cell">2022</td>
+                                <td class="table-cell">
+                                    <a class="client-link" href="#">María García</a>
+                                </td>
+                                <td class="table-cell actions-cell">
+                                    <div class="actions-container">
+                                        <button class="action-btn edit-btn">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="action-btn delete-btn">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-cell">GHI789</td>
+                                <td class="table-cell">Nissan</td>
+                                <td class="table-cell">Leaf</td>
+                                <td class="table-cell">2021</td>
+                                <td class="table-cell">
+                                    <a class="client-link" href="#">Carlos Sánchez</a>
+                                </td>
+                                <td class="table-cell actions-cell">
+                                    <div class="actions-container">
+                                        <button class="action-btn edit-btn">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="action-btn delete-btn">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-cell">JKL012</td>
+                                <td class="table-cell">Audi</td>
+                                <td class="table-cell">e-tron</td>
+                                <td class="table-cell">2023</td>
+                                <td class="table-cell">
+                                    <a class="client-link" href="#">Ana Martínez</a>
+                                </td>
+                                <td class="table-cell actions-cell">
+                                    <div class="actions-container">
+                                        <button class="action-btn edit-btn">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="action-btn delete-btn">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-cell">MNO345</td>
+                                <td class="table-cell">Ford</td>
+                                <td class="table-cell">Mustang Mach-E</td>
+                                <td class="table-cell">2022</td>
+                                <td class="table-cell">
+                                    <a class="client-link" href="#">Luis Rodríguez</a>
+                                </td>
+                                <td class="table-cell actions-cell">
+                                    <div class="actions-container">
+                                        <button class="action-btn edit-btn">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="action-btn delete-btn">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-container">
+                    <span class="pagination-info">Mostrando 1-5 de 50 vehículos</span>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn">Anterior</button>
+                        <button class="pagination-btn">Siguiente</button>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
+    </div>
     </div>
 
     <script src="../../static/js/tecnico/tecnicoVehiculos.js"></script>

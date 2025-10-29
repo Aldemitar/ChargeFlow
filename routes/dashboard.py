@@ -12,6 +12,7 @@ from data.models import Cita, Usuario, EstadoCita, RolUsuario
 router = APIRouter(prefix="", tags=["Dashboard"])
 templates = Jinja2Templates(directory="templates")
 
+# Templates de administrador
 @router.get("/admin/dashboard", response_class=HTMLResponse)
 async def admin_dashboard(
     request: Request,
@@ -25,6 +26,34 @@ async def admin_dashboard(
         {"request": request, "user": user}
     )
 
+@router.get("/admin/ganancias", response_class=HTMLResponse)
+async def admin_ganancias(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.ADMIN))
+):
+    """
+    Dashboard de ganancias — muestra los ingresos del taller.
+    """
+    return templates.TemplateResponse(
+        "admin/gananciasAdmin.html",
+        {"request": request, "user": user}
+    )
+
+@router.get("/admin/tecnicos", response_class=HTMLResponse)
+async def admin_tecnicos(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.ADMIN))
+):
+    """
+    Dashboard de técnicos — muestra los técnicos del taller.
+    """
+    return templates.TemplateResponse(
+        "admin/tecnicosAdmin.html",
+        {"request": request, "user": user}
+    )
+
+
+# Templates de técnico
 @router.get("/tecnico/dashboard", response_class=HTMLResponse)
 async def dashboard_tecnico(
     request: Request,
@@ -84,6 +113,60 @@ async def dashboard_tecnico(
         }
     )
 
+@router.get("/tecnico/citas", response_class=HTMLResponse)
+async def tecnico_citas(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO))
+):
+    """
+    Dashboard de citas — muestra las citas que crea un técnico.
+    """
+    return templates.TemplateResponse(
+        "tecnico/tecnicosCitas.html",
+        {"request": request, "user": user}
+    )
+
+@router.get("/tecnico/clientes", response_class=HTMLResponse)
+async def tecnico_clientes(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO))
+):
+    """
+    Dashboard de clientes — muestra los clientes que crea un técnico.
+    """
+    return templates.TemplateResponse(
+        "tecnico/tecnicosClientes.html",
+        {"request": request, "user": user}
+    )
+
+@router.get("/tecnico/vehiculos", response_class=HTMLResponse)
+async def tecnico_vehiculos(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO))
+):
+    """
+    Dashboard de vehiculos — muestra los vehiculos que crea un técnico.
+    """
+    return templates.TemplateResponse(
+        "tecnico/tecnicosVehiculos.html",
+        {"request": request, "user": user}
+    )
+
+@router.get("/tecnico/baterias", response_class=HTMLResponse)
+async def tecnico_baterias(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO))
+):
+    """
+    Dashboard de baterías — muestra las baterías que crea un técnico.
+    """
+    return templates.TemplateResponse(
+        "tecnico/tecnicosBaterias.html",
+        {"request": request, "user": user}
+    )
+
+
+# Templates de cliente
 @router.get("/cliente/dashboard", response_class=HTMLResponse)
 async def cliente_dashboard(
     request: Request,
@@ -94,5 +177,31 @@ async def cliente_dashboard(
     """
     return templates.TemplateResponse(
         "cliente/clienteDashboard.html",
+        {"request": request, "user": user}
+    )
+
+@router.get("/cliente/dashboard", response_class=HTMLResponse)
+async def cliente_dashboard(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.CLIENTE))
+):
+    """
+    Dashboard del cliente — muestra sus datos y citas.
+    """
+    return templates.TemplateResponse(
+        "cliente/clienteDashboard.html",
+        {"request": request, "user": user}
+    )
+
+@router.get("/cliente/perfil", response_class=HTMLResponse)
+async def cliente_perfil(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.CLIENTE))
+):
+    """
+    Perfil del cliente — permite cambiar contraseña y foto de perfil
+    """
+    return templates.TemplateResponse(
+        "cliente/perfilCliente.html",
         {"request": request, "user": user}
     )
