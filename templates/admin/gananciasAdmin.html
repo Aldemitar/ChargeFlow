@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChargeFlow - Ganancias</title>
+
+    <link rel="stylesheet" href="../../static/css/admin/gananciasAdmin.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="top">
+                <div class="user">
+                    <div class="avatar"></div>
+                    <div class="info">
+                        <h3>Admin</h3>
+                        <p>admin@chargeflow.com</p>
+                    </div>
+                </div>
+                <nav>
+                    <a href="../admin/adminDashboard.html">
+                        <span class="material-icons">dashboard</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a class="active" href="../admin/gananciasAdmin.html">
+                        <span class="material-icons">payments</span>
+                        <span>Ganancias</span>
+                    </a>
+                    <a href="../admin/tecnicoAdmin.html">
+                        <span class="material-icons">engineering</span>
+                        <span>Técnico</span>
+                    </a>
+                </nav>
+            </div>
+            <button id="logoutBtn" class="logout">Cerrar Sesión</button>
+        </aside>
+
+        <!-- Contenido -->
+        <main class="content">
+            <header>
+                <h1>Análisis de Ganancias</h1>
+                <div class="actions">
+                    <button id="exportCSV" class="btn-secondary">
+                        Exportar CSV <span class="material-icons">download</span>
+                    </button>
+                    <button id="exportPDF" class="btn-primary">
+                        Exportar PDF <span class="material-icons">picture_as_pdf</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filtros -->
+            <section class="filters">
+                <div class="filter-group">
+                    <button id="dateRangeBtn" class="filter-btn">
+                        <span class="material-icons">calendar_today</span>
+                        Seleccionar Rango
+                        <span class="material-icons">expand_more</span>
+                    </button>
+
+                    <div id="dateFilterDropdown" class="dropdown hidden">
+                        <label>Desde: <input type="date" id="startDate"></label>
+                        <br>
+                        <label>Hasta: <input type="date" id="endDate"></label>
+                        <br>
+                        <button id="applyDateFilter" class="btn-primary" style="margin-top: 0.5rem;">Aplicar</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <button id="serviceFilterBtn" class="filter-btn">
+                        <span class="material-icons">electric_moped</span>
+                        Filtrar Servicio
+                        <span class="material-icons">expand_more</span>
+                    </button>
+                    <div id="serviceFilterDropdown" class="dropdown hidden">
+                        <ul>
+                            <li><label><input type="checkbox" name="service" value="Carga de Batería" checked /> Carga
+                                    de Batería</label></li>
+                            <li><label><input type="checkbox" name="service" value="Diagnóstico de Batería" checked />
+                                    Diagnóstico de Batería</label></li>
+                            <li><label><input type="checkbox" name="service" value="Mantenimiento General" />
+                                    Mantenimiento General</label></li>
+                            <li><label><input type="checkbox" name="service" value="Reparación de Motor" checked />
+                                    Reparación de Motor</label></li>
+                        </ul>
+                        <button id="applyServiceFilter" class="btn-primary" style="margin-top: 0.5rem;">Aplicar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Métricas -->
+            <section class="grid">
+                <div class="card">
+                    <h2>Ganancia Total</h2>
+                    <p class="value" id="totalGanancia">$85,230</p>
+                    <p class="change up"><span class="material-icons">arrow_upward</span> +12.5% vs. mes anterior</p>
+                </div>
+                <div class="card">
+                    <h2>Servicios Totales</h2>
+                    <p class="value" id="totalServicios">1,234</p>
+                    <p class="change up"><span class="material-icons">arrow_upward</span> +8.2% vs. mes anterior</p>
+                </div>
+                <div class="card">
+                    <h2>Ingreso Promedio</h2>
+                    <p class="value" id="ingresoPromedio">$69.07</p>
+                    <p class="change down"><span class="material-icons">arrow_downward</span> -1.1% vs. mes anterior</p>
+                </div>
+            </section>
+
+            <!-- Gráfica -->
+            <section class="card full">
+                <h2>Evolución de Ganancias</h2>
+                <canvas id="gananciasChart"></canvas>
+            </section>
+
+            <!-- Tabla -->
+            <section class="card full">
+                <h2>Desglose de Ingresos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Servicio</th>
+                            <th>Vehículo</th>
+                            <th>Técnico</th>
+                            <th>Ingreso</th>
+                            <th>Ganancia Neta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Los datos se cargarán dinámicamente -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script src="../../static/js/admin/gananciasAdmin.js"></script>
+</body>
+
+</html>
