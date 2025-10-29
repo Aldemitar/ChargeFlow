@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>ChargeFlow - Iniciar Sesión</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#39E079",
+            "background-light": "#f6f8f7",
+            "background-dark": "#122017"
+          },
+          fontFamily: { display: "Inter" },
+          borderRadius: { lg: "0.5rem", xl: "0.75rem", full: "9999px" }
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/login/login.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="w-full h-full bg-center bg-no-repeat bg-cover"
+        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDn0JXwSQ8fTX8e3Wi4BOYY33aT6OurtdBhjDptGOMZmehTEjzJg7mJU6WgZPsgX3Q45Jcqtl4ANVDFg5rZRTc-PsSOeP7yxv_AvPKVZkmNrbAO-nlHlxVzmcW-mSmOiM8Yvum3atpNrhJuHbMTs3LB13r5soIM0fWpoTsX-G0nr-z6P1z6wXW9t0b3_cLa9NNGpF8mJJ0HZy3cacf3a5T-UxaqINsEmingzzJfmajEtv-JlvmJ6MLi6FW6vcRxw7NkhuoceGvvVn1d');">
+      </div>
+      <div class="absolute inset-0 bg-background-dark/80"></div>
+    </div>
+    <div class="relative z-10 flex h-full grow flex-col">
+      <div class="flex flex-1 items-center justify-center p-4">
+        <div class="flex flex-col w-full max-w-md bg-background-light dark:bg-background-dark rounded-xl shadow-2xl p-8 gap-6">
+          <div class="flex justify-center mb-2">
+            <span class="material-symbols-outlined text-primary text-3xl">electric_bolt</span>
+            <h1 class="text-2xl font-bold text-white ml-2">ChargeFlow</h1>
+          </div>
+          <div class="text-center">
+            <p class="text-white text-3xl font-black">Iniciar Sesión</p>
+            <p class="text-[#9dabb9] text-base">Bienvenido. Por favor, introduce tus datos.</p>
+          </div>
+          <form id="loginForm" method="POST" action="/login/" class="flex flex-col gap-4 mt-4">
+            <label class="flex flex-col w-full">
+              <p class="text-white text-base font-medium pb-2">Email</p>
+              <input id="email" name="email" type="email"
+                class="form-input flex w-full rounded-lg text-white border border-[#3b4754] bg-[#1c2127] h-14 placeholder:text-[#9dabb9] p-[15px]"
+                placeholder="Introduce tu email" required />
+            </label>
+            <label class="flex flex-col w-full">
+              <p class="text-white text-base font-medium pb-2">Contraseña</p>
+              <div class="flex w-full items-stretch rounded-lg">
+                <input id="password" name="password" type="password"
+                  class="form-input flex w-full rounded-l-lg text-white border border-[#3b4754] bg-[#1c2127] h-14 placeholder:text-[#9dabb9] p-[15px]"
+                  placeholder="Introduce tu contraseña" required />
+                <div id="togglePassword"
+                  class="text-[#9dabb9] flex border border-[#3b4754] bg-[#1c2127] items-center justify-center pr-[15px] rounded-r-lg cursor-pointer">
+                  <span class="material-symbols-outlined">visibility</span>
+                </div>
+              </div>
+            </label>
+            <button type="submit"
+              class="flex w-full items-center justify-center rounded-lg h-12 px-5 bg-primary text-white font-bold hover:bg-primary/90 transition-colors">
+              Iniciar Sesión
+            </button>
+            {% if error %}
+              <div id="loginMessage" class="text-center text-sm mt-2 text-red-400">{{ error }}</div>
+            {% endif %}
+            <div class="text-center mt-3">
+              <a class="text-sm text-[#9dabb9] hover:text-primary transition-colors" href="#">
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/static/js/login/login.js"></script>
+</body>
+</html>
