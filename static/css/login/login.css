@@ -1,0 +1,98 @@
+/* Estilos personalizados para ChargeFlow Login */
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Aplicar animación de entrada al formulario */
+.flex.flex-col.w-full.max-w-md {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Estilos para los inputs cuando hay error */
+.input-error {
+  border-color: #ef4444 !important;
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Estilos para mensajes de éxito */
+.message-success {
+  color: #39E079;
+}
+
+/* Mejoras de focus para accesibilidad */
+.form-input:focus {
+  outline: 2px solid #39E079;
+  outline-offset: 2px;
+}
+
+/* Efectos hover mejorados */
+.bg-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(57, 224, 121, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Responsive adicional */
+@media (max-width: 640px) {
+  .flex.flex-col.w-full.max-w-md {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .text-white.text-3xl.font-black {
+    font-size: 1.75rem;
+  }
+}
+
+/* Loading state para el botón */
+.button-loading {
+  position: relative;
+  color: transparent;
+}
+
+.button-loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
