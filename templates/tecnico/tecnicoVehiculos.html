@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>ChargeFlow - Gestión de Vehículos</title>
-    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoVehiculos.css">
+    <link rel="stylesheet" href="/static/css/tecnico/tecnicoVehiculos.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -19,8 +19,8 @@
                     <div class="user-info">
                         <div class="user-avatar"></div>
                         <div class="user-details">
-                            <h1 class="user-name">Admin</h1>
-                            <p class="user-email">admin@chargeflow.com</p>
+                            <h1 class="user-name">{{ tecnico.nombre }} {{ tecnico.apellido }}</h1>
+                                <p class="user-email">{{ tecnico.email }}</p>
                         </div>
                     </div>
                     <div class="navigation">
@@ -200,7 +200,7 @@
     </div>
     </div>
 
-    <script src="../../static/js/tecnico/tecnicoVehiculos.js"></script>
+    <script src="/static/js/tecnico/tecnicoVehiculos.js"></script>
 </body>
 
 </html>

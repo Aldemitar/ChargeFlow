@@ -116,7 +116,8 @@ async def dashboard_tecnico(
 @router.get("/tecnico/citas", response_class=HTMLResponse)
 async def tecnico_citas(
     request: Request,
-    user=Depends(require_roles(RolUsuario.TECNICO))
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Dashboard de citas — muestra las citas que crea un técnico.
@@ -129,7 +130,8 @@ async def tecnico_citas(
 @router.get("/tecnico/clientes", response_class=HTMLResponse)
 async def tecnico_clientes(
     request: Request,
-    user=Depends(require_roles(RolUsuario.TECNICO))
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Dashboard de clientes — muestra los clientes que crea un técnico.
@@ -142,7 +144,8 @@ async def tecnico_clientes(
 @router.get("/tecnico/vehiculos", response_class=HTMLResponse)
 async def tecnico_vehiculos(
     request: Request,
-    user=Depends(require_roles(RolUsuario.TECNICO))
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Dashboard de vehiculos — muestra los vehiculos que crea un técnico.
@@ -155,7 +158,8 @@ async def tecnico_vehiculos(
 @router.get("/tecnico/baterias", response_class=HTMLResponse)
 async def tecnico_baterias(
     request: Request,
-    user=Depends(require_roles(RolUsuario.TECNICO))
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Dashboard de baterías — muestra las baterías que crea un técnico.
@@ -170,7 +174,8 @@ async def tecnico_baterias(
 @router.get("/cliente/dashboard", response_class=HTMLResponse)
 async def cliente_dashboard(
     request: Request,
-    user=Depends(require_roles(RolUsuario.CLIENTE))
+    user=Depends(require_roles(RolUsuario.CLIENTE)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Dashboard del cliente — muestra sus datos y citas.
@@ -183,7 +188,8 @@ async def cliente_dashboard(
 @router.get("/cliente/dashboard", response_class=HTMLResponse)
 async def cliente_dashboard(
     request: Request,
-    user=Depends(require_roles(RolUsuario.CLIENTE))
+    user=Depends(require_roles(RolUsuario.CLIENTE)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Dashboard del cliente — muestra sus datos y citas.
@@ -196,7 +202,8 @@ async def cliente_dashboard(
 @router.get("/cliente/perfil", response_class=HTMLResponse)
 async def cliente_perfil(
     request: Request,
-    user=Depends(require_roles(RolUsuario.CLIENTE))
+    user=Depends(require_roles(RolUsuario.CLIENTE)),
+    session: AsyncSession = Depends(get_session)
 ):
     """
     Perfil del cliente — permite cambiar contraseña y foto de perfil
