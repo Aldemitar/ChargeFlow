@@ -18,9 +18,12 @@ async def admin_dashboard(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
+    
+    admin = user
+
     return templates.TemplateResponse(
         "admin/adminDashboard.html",
-        {"request": request, "user": user}
+        {"request": request, "admin": admin}
     )
 
 @router.get("/admin/ganancias", response_class=HTMLResponse)
@@ -28,9 +31,12 @@ async def admin_ganancias(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
+    
+    admin = user
+
     return templates.TemplateResponse(
         "admin/gananciasAdmin.html",
-        {"request": request, "user": user}
+        {"request": request, "admin": admin}
     )
 
 @router.get("/admin/tecnicos", response_class=HTMLResponse)
@@ -38,9 +44,12 @@ async def admin_tecnicos(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
+    
+    admin = user
+
     return templates.TemplateResponse(
         "admin/tecnicosAdmin.html",
-        {"request": request, "user": user}
+        {"request": request, "admin": admin}
     )
 
 # Templates de técnico
