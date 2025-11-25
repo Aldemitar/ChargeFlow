@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ChargeFlow - Crear Cita</title>
+    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoCitas.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <div class="flex h-screen">
+        <aside class="sidebar">
+            <div class="sidebar-container">
+                <div class="sidebar-content">
+                    <div class="user-info">
+                        <div class="user-avatar"></div>
+                        <div class="user-details">
+                            <h1 class="user-name">{{ tecnico.nombre }} {{ tecnico.apellido }}</h1>
+                            <p class="user-email">{{ tecnico.email }}</p>
+                        </div>
+                    </div>
+                    <div class="navigation">
+                        <a class="nav-item" href="/tecnico/dashboard">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            <p class="nav-text">Dashboard</p>
+                        </a>
+                        <a class="nav-item active" href="/tecnico/citas">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                            <p class="nav-text">Citas</p>
+                        </a>
+                        <a class="nav-item" href="/tecnico/clientes">
+                            <span class="material-symbols-outlined">group</span>
+                            <p class="nav-text">Clientes</p>
+                        </a>
+                        <a class="nav-item" href="/tecnico/vehiculos">
+                            <span class="material-symbols-outlined">directions_car</span>
+                            <p class="nav-text">Vehículos</p>
+                        </a>
+                        <a class="nav-item" href="/tecnico/baterias">
+                            <span class="material-symbols-outlined">battery_full</span>
+                            <p class="nav-text">Baterías</p>
+                        </a>
+                    </div>
+                </div>
+                <form action="/logout" method="post">
+                    <button type="submit" class="logout-btn">
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+        
+        <div class="layout-container">
+            <main class="main-content">
+                <div class="content-container">
+                    <div class="header-section">
+                        <p class="page-title">Crear Nueva Cita</p>
+                        <a href="/tecnico/citas" class="create-appointment-btn" style="background-color: #6b7280;">
+                            <span class="btn-text">Volver a Citas</span>
+                        </a>
+                    </div>
+
+                    <div class="form-card">
+                        
+                        <form action="/tecnico/citas/nueva" method="POST" class="appointment-form">
+                            
+                            <h3 class="form-title">Detalles de la Cita</h3>
+                            
+                            {% if success_message %}
+                                <div class="alert success">{{ success_message }}</div>
+                            {% endif %}
+                            {% if error_message %}
+                                <div class="alert error">{{ error_message }}</div>
+                            {% endif %}
+
+                            <div class="form-grid">
+                                
+                                <div class="form-group">
+                                    <label for="cliente_id" class="form-label">Cliente (*)</label>
+                                    <select id="cliente_id" name="cliente_id" class="form-input" required>
+                                        <option value="">Seleccione un Cliente</option>
+                                        {% for cliente in clientes %}
+                                        <option value="{{ cliente.id }}">{{ cliente.nombre }} {{ cliente.apellido }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="vehiculo_id" class="form-label">Vehículo (*)</label>
+                                    <select id="vehiculo_id" name="vehiculo_id" class="form-input" required>
+                                        <option value="">Seleccione un Vehículo</option>
+                                        {% for vehiculo in vehiculos %}
+                                        <option value="{{ vehiculo.id }}">{{ vehiculo.marca }} {{ vehiculo.modelo }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="fecha" class="form-label">Fecha (*)</label>
+                                    <input type="date" id="fecha" name="fecha" class="form-input" required min="{{ today }}" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="hora" class="form-label">Hora (HH:MM) (*)</label>
+                                    <input type="time" id="hora" name="hora" class="form-input" required pattern="^\d{2}:\d{2}$" title="Formato HH:MM (ej: 09:30)" />
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="costo" class="form-label">Costo Estimado ($) (*)</label>
+                                    <input type="number" id="costo" name="costo" class="form-input" required min="0.01" step="0.01" placeholder="Ej: 150.00" />
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <label for="servicio" class="form-label">Servicio Solicitado / Notas (Opcional)</label>
+                                    <textarea id="servicio" name="servicio_notas" class="form-input text-area" rows="3" placeholder="Descripción breve del trabajo a realizar o motivo de la cita."></textarea>
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="submit-btn">
+                                    <span class="material-symbols-outlined">save</span>
+                                    Guardar Cita
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../../static/js/tecnico/tecnicoCitas.js"></script>
+</body>
+</html>

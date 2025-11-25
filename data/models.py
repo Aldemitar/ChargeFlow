@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List
 from pydantic import EmailStr, validator
+from pydantic import Field as PydanticField
 from datetime import date
 from sqlalchemy import Column, Boolean, Enum
 import enum
@@ -142,3 +143,45 @@ class Cita(SQLModel, table=True):
         sa_relationship_kwargs={"foreign_keys": "[Cita.tecnico_id]"}
     )
     vehiculo: Optional[Vehiculo] = Relationship(back_populates="citas")
+
+
+class CitaCreate(SQLModel):
+    cliente_id: int = PydanticField(..., description="ID del cliente que solicita la cita.")
+    vehiculo_id: int = PydanticField(..., description="ID del vehículo a atender.")
+    fecha: date = PydanticField(..., description="Fecha programada para la cita.")
+    hora: str = PydanticField(..., min_length=5, max_length=5, pattern=r"^\d{2}:\d{2}$", description="Hora de la cita en formato HH:MM (ej. '09:30').")
+    costo: float = PydanticField(..., gt=0, description="Costo inicial o estimado de la cita.")
+
+class ClienteSelect(SQLModel):
+    id: int
+    nombre: str
+    apellido: str
+
+class VehiculoSelect(SQLModel):
+    id: int
+    marca: str
+    modelo: str
+
+class UsuarioBase(SQLModel):
+    nombre: str
+    apellido: str
+    email: EmailStr
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
+
+class ClienteCreate(UsuarioBase):
+    contraseña: str = Field(min_length=6)
+
+class ClienteUpdate(SQLModel):
+    nombre: Optional[str] = None
+    apellido: Optional[str] = None
+    email: Optional[EmailStr] = None
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
+    activo: Optional[bool] = None
+
+class ClienteRead(UsuarioBase):
+    id: int
+    fecha_registro: date
+    activo: bool
+    eliminado: bool
