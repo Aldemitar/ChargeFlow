@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>ChargeFlow - Gestión de Clientes</title>
-    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoClientes.css">
+    <link rel="stylesheet" href="/static/css/tecnico/tecnicoClientes.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -19,45 +19,50 @@
                     <div class="user-info">
                         <div class="user-avatar"></div>
                         <div class="user-details">
-                            <h1 class="user-name">Tecnico</h1>
-                            <p class="user-email">tecnico@chargeflow.com</p>
+                            <h1 class="user-name">{{ tecnico.nombre or 'Tecnico' }}</h1>
+                            <p class="user-email">{{ tecnico.email or 'tecnico@chargeflow.com' }}</p>
                         </div>
                     </div>
                     <div class="navigation">
-                        <a class="nav-item" href="../tecnico/tecnicoDashboard.html">
+                        <a class="nav-item" href="/tecnico/dashboard">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p class="nav-text">Dashboard</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoCitas.html">
+                        <a class="nav-item" href="/tecnico/citas">
                             <span class="material-symbols-outlined">calendar_month</span>
                             <p class="nav-text">Citas</p>
                         </a>
-                        <a class="nav-item active" href="../tecnico/tecnicoClientes.html">
+                        <a class="nav-item active" href="/tecnico/clientes">
                             <span class="material-symbols-outlined">group</span>
                             <p class="nav-text">Clientes</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoVehiculos.html">
+                        <a class="nav-item" href="/tecnico/vehiculos">
                             <span class="material-symbols-outlined">directions_car</span>
                             <p class="nav-text">Vehículos</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoBaterias.html">
+                        <a class="nav-item" href="/tecnico/baterias">
                             <span class="material-symbols-outlined">battery_full</span>
                             <p class="nav-text">Baterías</p>
                         </a>
                     </div>
                 </div>
-                <button class="logout-btn">
-                    <span class="logout-text">Cerrar Sesión</span>
-                </button>
+                <form action="/login/logout" method="get">
+                    <button class="logout-btn" type="submit">
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </button>
+                </form>
             </div>
         </aside>
         <div class="main-container">
             <header class="header">
                 <div class="header-search">
-                    <label class="search-label">
-                        <span class="search-icon material-symbols-outlined">search</span>
-                        <input class="search-input" placeholder="Buscar cliente por nombre, email..." />
-                    </label>
+                    <form method="get" action="/tecnico/clientes">
+                        <label class="search-label">
+                            <span class="search-icon material-symbols-outlined">search</span>
+                            <input class="search-input" name="search" placeholder="Buscar cliente por nombre, email..." value="{{ search }}" />
+                        </label>
+                        <button type="submit" hidden></button>
+                    </form>
                 </div>
                 <div class="header-actions">
                     <button class="notification-btn">
@@ -67,8 +72,8 @@
                     <div class="user-profile">
                         <div class="user-avatar-small"></div>
                         <div class="user-info-small">
-                            <p class="user-name-small">Técnico</p>
-                            <p class="user-email-small">tecnico@chargeflow.com</p>
+                            <p class="user-name-small">{{ tecnico.nombre or 'Técnico' }}</p>
+                            <p class="user-email-small">{{ tecnico.email or 'tecnico@chargeflow.com' }}</p>
                         </div>
                         <button class="dropdown-btn">
                             <span class="material-symbols-outlined">expand_more</span>
@@ -79,7 +84,7 @@
             <main class="main-content">
                 <div class="content-header">
                     <h2 class="page-title">Gestión de Clientes</h2>
-                    <button class="add-client-btn" id="addClientBtn">
+                    <button class="add-client-btn" id="addClientBtn" type="button">
                         <span class="material-symbols-outlined">add</span>
                         <span>Agregar Cliente</span>
                     </button>
@@ -97,120 +102,69 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="table-row">
-                                    <td class="table-cell name-cell">Juan Pérez</td>
-                                    <td class="table-cell">juan.perez@example.com</td>
-                                    <td class="table-cell">555-1234</td>
-                                    <td class="table-cell">2023-01-15</td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn view-btn">
-                                                <span class="material-symbols-outlined">visibility</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell name-cell">Ana Gómez</td>
-                                    <td class="table-cell">ana.gomez@example.com</td>
-                                    <td class="table-cell">555-5678</td>
-                                    <td class="table-cell">2023-02-20</td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn view-btn">
-                                                <span class="material-symbols-outlined">visibility</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell name-cell">Carlos Sánchez</td>
-                                    <td class="table-cell">carlos.sanchez@example.com</td>
-                                    <td class="table-cell">555-8765</td>
-                                    <td class="table-cell">2023-03-10</td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn view-btn">
-                                                <span class="material-symbols-outlined">visibility</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell name-cell">Laura Torres</td>
-                                    <td class="table-cell">laura.torres@example.com</td>
-                                    <td class="table-cell">555-4321</td>
-                                    <td class="table-cell">2023-04-05</td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn view-btn">
-                                                <span class="material-symbols-outlined">visibility</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell name-cell">Marta Ramírez</td>
-                                    <td class="table-cell">marta.ramirez@example.com</td>
-                                    <td class="table-cell">555-9876</td>
-                                    <td class="table-cell">2023-05-12</td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn view-btn">
-                                                <span class="material-symbols-outlined">visibility</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                {% if clientes %}
+                                    {% for cliente in clientes %}
+                                    <tr class="table-row">
+                                        <td class="table-cell name-cell">{{ cliente.nombre }} {{ cliente.apellido }}</td>
+                                        <td class="table-cell">{{ cliente.email }}</td>
+                                        <td class="table-cell">{{ cliente.telefono or 'N/A' }}</td>
+                                        <td class="table-cell">{{ cliente.fecha_registro.strftime('%Y-%m-%d') if cliente.fecha_registro else 'N/A' }}</td>
+                                        <td class="table-cell actions-cell">
+                                            <div class="actions-container">
+                                                <button class="action-btn edit-btn" data-id="{{ cliente.id }}">
+                                                    <span class="material-symbols-outlined">edit</span>
+                                                </button>
+                                                <button class="action-btn view-btn" data-id="{{ cliente.id }}">
+                                                    <span class="material-symbols-outlined">visibility</span>
+                                                </button>
+                                                <button class="action-btn delete-btn" data-id="{{ cliente.id }}">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">No hay clientes para mostrar.</td>
+                                    </tr>
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
                     <div class="pagination-container">
-                        <p class="pagination-info">Mostrando <span class="pagination-number">1</span> a <span
-                                class="pagination-number">5</span> de <span class="pagination-number">25</span>
-                            resultados</p>
+                        <p class="pagination-info">Mostrando <span class="pagination-number">{{ start_item }}</span> a <span
+                                class="pagination-number">{{ end_item }}</span> de <span class="pagination-number">{{ total_clientes }}</span> resultados</p>
                         <div class="pagination-controls">
-                            <a class="pagination-arrow" href="#">
+                            {% if page > 1 %}
+                            <a class="pagination-arrow" href="?page={{ page - 1 }}&search={{ search }}">
                                 <span class="material-symbols-outlined">chevron_left</span>
                             </a>
-                            <a class="pagination-page active" href="#">1</a>
-                            <a class="pagination-page" href="#">2</a>
-                            <a class="pagination-page" href="#">3</a>
-                            <span class="pagination-ellipsis">...</span>
-                            <a class="pagination-page" href="#">5</a>
-                            <a class="pagination-arrow" href="#">
+                            {% else %}
+                            <span class="pagination-arrow disabled">
+                                <span class="material-symbols-outlined">chevron_left</span>
+                            </span>
+                            {% endif %}
+                            {% for p in range(1, total_pages + 1) %}
+                                {% if p == page %}
+                                  <a class="pagination-page active" href="?page={{ p }}&search={{ search }}">{{ p }}</a>
+                                {% elif p <= 3 or p > total_pages - 2 or (p >= page - 1 and p <= page + 1) %} 
+                                  <a class="pagination-page" href="?page={{ p }}&search={{ search }}">{{ p }}</a>
+                                {% elif p == 4 and page > 5 %}
+                                  <span class="pagination-ellipsis">...</span>
+                                {% elif p == total_pages - 3 and page < total_pages - 4 %}
+                                  <span class="pagination-ellipsis">...</span>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page < total_pages %}
+                            <a class="pagination-arrow" href="?page={{ page + 1 }}&search={{ search }}">
                                 <span class="material-symbols-outlined">chevron_right</span>
                             </a>
+                            {% else %}
+                            <span class="pagination-arrow disabled">
+                                <span class="material-symbols-outlined">chevron_right</span>
+                            </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -221,55 +175,59 @@
             <div class="modal-container">
                 <div class="modal-header">
                     <h2 class="modal-title">Nuevo Cliente</h2>
-                    <button class="modal-close-btn" id="closeModalBtn">
+                    <button class="modal-close-btn" id="closeModalBtn" type="button">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
                 <div class="modal-content">
                     <div class="modal-tabs">
-                        <button class="modal-tab active">
+                        <button class="modal-tab active" type="button">
                             <span class="material-symbols-outlined">person</span>
                             <span>Información del cliente</span>
                         </button>
-                        <button class="modal-tab">
+                        <button class="modal-tab" type="button">
                             <span class="material-symbols-outlined">calendar_month</span>
                             <span>Citas programadas</span>
                         </button>
                     </div>
-                    <form class="client-form">
+                    <form class="client-form" method="post" action="/tecnico/clientes">
                         <div class="form-grid">
                             <div class="form-group">
-                                <label class="form-label">Nombre</label>
-                                <input class="form-input" type="text" />
+                                <label class="form-label" for="nombre">Nombre</label>
+                                <input class="form-input" id="nombre" name="nombre" type="text" required />
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Apellido</label>
-                                <input class="form-input" type="text" />
+                                <label class="form-label" for="apellido">Apellido</label>
+                                <input class="form-input" id="apellido" name="apellido" type="text" required />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Correo electrónico</label>
-                            <input class="form-input" type="email" />
+                            <label class="form-label" for="email">Correo electrónico</label>
+                            <input class="form-input" id="email" name="email" type="email" required />
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Teléfono</label>
-                            <input class="form-input" type="tel" />
+                            <label class="form-label" for="telefono">Teléfono</label>
+                            <input class="form-input" id="telefono" name="telefono" type="tel" />
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Dirección</label>
-                            <input class="form-input" type="text" />
+                            <label class="form-label" for="direccion">Dirección</label>
+                            <input class="form-input" id="direccion" name="direccion" type="text" />
                         </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contraseña">Contraseña</label>
+                            <input class="form-input" id="contraseña" name="contraseña" type="password" required />
+                        </div>
+                        <button type="submit" class="modal-btn save-btn">Guardar</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-btn cancel-btn" id="cancelModalBtn">Cancelar</button>
-                    <button class="modal-btn save-btn">Guardar</button>
+                    <button class="modal-btn cancel-btn" id="cancelModalBtn" type="button">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="../../static/js/tecnico/tecnicoClientes.js"></script>
+    <script src="/static/js/tecnico/tecnicoClientes.js"></script>
 </body>
 
 </html>

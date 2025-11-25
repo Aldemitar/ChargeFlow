@@ -19,8 +19,8 @@
                     <div class="user-info">
                         <div class="user-avatar"></div>
                         <div class="user-details">
-                            <h1 class="user-name">Admin</h1>
-                            <p class="user-email">admin@chargeflow.com</p>
+                            <h1 class="user-name">{{ tecnico.nombre if tecnico.nombre else 'Admin' }}</h1>
+                            <p class="user-email">{{ tecnico.email if tecnico.email else 'admin@chargeflow.com' }}</p>
                         </div>
                     </div>
                     <div class="navigation">
@@ -58,15 +58,16 @@
                 </div>
                 <div class="search-section">
                     <div class="search-container">
-                        <label class="search-label">
+                        <form method="get" action="/tecnico/vehiculos" class="search-label">
                             <div class="search-wrapper">
                                 <div class="search-icon">
                                     <span class="material-symbols-outlined">search</span>
                                 </div>
-                                <input class="search-input" placeholder="Buscar por placa, marca, modelo o cliente"
-                                    value="" />
+                                <input class="search-input" name="search" placeholder="Buscar por placa, marca, modelo o cliente"
+                                    value="{{ search | default('') }}" />
+                                <button type="submit" style="display:none;">Buscar</button>
                             </div>
-                        </label>
+                        </form>
                     </div>
                     <div class="add-button-container">
                         <button class="add-vehicle-btn" id="addVehicleBtn">
@@ -89,109 +90,43 @@
                                 </tr>
                             </thead>
                             <tbody class="table-body">
+                                {% for vehiculo in vehiculos %}
                                 <tr class="table-row">
-                                    <td class="table-cell">ABC123</td>
-                                    <td class="table-cell">Chevrolet</td>
-                                    <td class="table-cell">Bolt EV</td>
-                                    <td class="table-cell">2023</td>
+                                    <td class="table-cell">{{ vehiculo.placa }}</td>
+                                    <td class="table-cell">{{ vehiculo.marca }}</td>
+                                    <td class="table-cell">{{ vehiculo.modelo }}</td>
+                                    <td class="table-cell">{{ vehiculo.anio }}</td>
                                     <td class="table-cell">
-                                        <a class="client-link" href="#">Juan Pérez</a>
+                                        <a class="client-link" href="#">{{ vehiculo.cliente }}</a>
                                     </td>
                                     <td class="table-cell actions-cell">
                                         <div class="actions-container">
-                                            <button class="action-btn edit-btn">
+                                            <button class="action-btn edit-btn" data-id="{{ vehiculo.id }}">
                                                 <span class="material-symbols-outlined">edit</span>
                                             </button>
-                                            <button class="action-btn delete-btn">
+                                            <button class="action-btn delete-btn" data-id="{{ vehiculo.id }}">
                                                 <span class="material-symbols-outlined">delete</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">DEF456</td>
-                                    <td class="table-cell">Tesla</td>
-                                    <td class="table-cell">Model S</td>
-                                    <td class="table-cell">2022</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">María García</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
+                                {% else %}
+                                <tr>
+                                    <td class="table-cell" colspan="6">No hay vehículos encontrados.</td>
                                 </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">GHI789</td>
-                                    <td class="table-cell">Nissan</td>
-                                    <td class="table-cell">Leaf</td>
-                                    <td class="table-cell">2021</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Carlos Sánchez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">JKL012</td>
-                                    <td class="table-cell">Audi</td>
-                                    <td class="table-cell">e-tron</td>
-                                    <td class="table-cell">2023</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Ana Martínez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">MNO345</td>
-                                    <td class="table-cell">Ford</td>
-                                    <td class="table-cell">Mustang Mach-E</td>
-                                    <td class="table-cell">2022</td>
-                                    <td class="table-cell">
-                                        <a class="client-link" href="#">Luis Rodríguez</a>
-                                    </td>
-                                    <td class="table-cell actions-cell">
-                                        <div class="actions-container">
-                                            <button class="action-btn edit-btn">
-                                                <span class="material-symbols-outlined">edit</span>
-                                            </button>
-                                            <button class="action-btn delete-btn">
-                                                <span class="material-symbols-outlined">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="pagination-container">
-                        <span class="pagination-info">Mostrando 1-5 de 50 vehículos</span>
+                        <span class="pagination-info">Mostrando {{ start_item }}-{{ end_item }} de {{ total_vehiculos }} vehículos</span>
                         <div class="pagination-controls">
-                            <button class="pagination-btn">Anterior</button>
-                            <button class="pagination-btn">Siguiente</button>
+                            {% if page > 1 %}
+                            <a href="?page={{ page - 1 }}&search={{ search }}" class="pagination-btn">Anterior</a>
+                            {% endif %}
+                            {% if page < total_pages %}
+                            <a href="?page={{ page + 1 }}&search={{ search }}" class="pagination-btn">Siguiente</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

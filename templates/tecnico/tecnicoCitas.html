@@ -17,36 +17,37 @@
                     <div class="user-info">
                         <div class="user-avatar"></div>
                         <div class="user-details">
-                            <h1 class="user-name">Admin</h1>
-                            <p class="user-email">admin@chargeflow.com</p>
+                            <h1 class="user-name">{{ tecnico.nombre }} {{ tecnico.apellido }}</h1>
+                            <p class="user-email">{{ tecnico.email }}</p>
                         </div>
                     </div>
                     <div class="navigation">
-                        <a class="nav-item" href="../tecnico/tecnicoDashboard.html">
+                        <a class="nav-item" href="/tecnico/dashboard">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p class="nav-text">Dashboard</p>
                         </a>
-                        <a class="nav-item active" href="../tecnico/tecnicoCitas.html">
+                        <a class="nav-item active" href="/tecnico/citas">
                             <span class="material-symbols-outlined">calendar_month</span>
                             <p class="nav-text">Citas</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoClientes.html">
+                        <a class="nav-item" href="/tecnico/clientes">
                             <span class="material-symbols-outlined">group</span>
                             <p class="nav-text">Clientes</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoVehiculos.html">
+                        <a class="nav-item" href="/tecnico/vehiculos">
                             <span class="material-symbols-outlined">directions_car</span>
                             <p class="nav-text">Vehículos</p>
                         </a>
-                        <a class="nav-item" href="../tecnico/tecnicoBaterias.html">
+                        <a class="nav-item" href="/tecnico/baterias">
                             <span class="material-symbols-outlined">battery_full</span>
                             <p class="nav-text">Baterías</p>
                         </a>
                     </div>
                 </div>
-                <button class="logout-btn">
-                    <span class="logout-text">Cerrar Sesión</span>
-                </button>
+                <form action="/logout" method="post"> <button type="submit" class="logout-btn">
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </button>
+                </form>
             </div>
         </aside>
         <div class="layout-container">
@@ -54,40 +55,39 @@
                 <div class="content-container">
                     <div class="header-section">
                         <p class="page-title">Gestión de Citas</p>
-                        <button class="create-appointment-btn">
+                        <a href="/tecnico/cita/nueva" class="create-appointment-btn">
                             <span class="btn-text">Crear Nueva Cita</span>
-                        </button>
+                        </a>
                     </div>
 
                     <div class="filters-section">
                         <div class="search-container">
-                            <label class="search-label">
-                                <div class="search-wrapper">
-                                    <div class="search-icon">
-                                        <span class="material-symbols-outlined">search</span>
+                            <form action="/tecnico/citas" method="GET" class="search-form">
+                                <label class="search-label">
+                                    <div class="search-wrapper">
+                                        <div class="search-icon">
+                                            <span class="material-symbols-outlined">search</span>
+                                        </div>
+                                        <input class="search-input" name="search" placeholder="Buscar por cliente, placa o modelo..." value="{{ request.query_params.get('search', '') or '' }}" />
+                                        {% if estado_filtro %}<input type="hidden" name="estado_filtro" value="{{ estado_filtro }}" />{% endif %}
                                     </div>
-                                    <input class="search-input" placeholder="Buscar por cliente, placa o modelo..." value="" />
-                                </div>
-                            </label>
+                                </label>
+                            </form>
                         </div>
+                        
                         <div class="filter-tabs">
-                            <label class="filter-tab active">
-                                <span class="tab-text">Todas</span>
-                                <input checked="" class="tab-input" name="status-filter" type="radio" value="Todas" />
-                            </label>
-                            <label class="filter-tab">
-                                <span class="tab-text">Pendientes</span>
-                                <input class="tab-input" name="status-filter" type="radio" value="Pendientes" />
-                            </label>
-                            <label class="filter-tab">
-                                <span class="tab-text">En Curso</span>
-                                <input class="tab-input" name="status-filter" type="radio" value="En Curso" />
-                            </label>
-                            <label class="filter-tab">
-                                <span class="tab-text">Completadas</span>
-                                <input class="tab-input" name="status-filter" type="radio" value="Completadas" />
-                            </label>
-                        </div>
+                            {% set estados_opciones = [('Todas', None), ('Pendiente', 'PENDIENTE'), ('En Curso', 'EN_PROGRESO'), ('Completada', 'COMPLETADA')] %}
+                            
+                            {% for label, estado_enum_val in estados_opciones %}
+                                {% set is_active = 'active' if estado_filtro == label else '' %}
+                                
+                                <label class="filter-tab {{ is_active }}" onclick="window.location.href='/tecnico/citas?estado_filtro={{ label }}'">
+                                    <span class="tab-text">{{ label }}</span>
+                                    <input class="tab-input" name="status-filter" type="radio" value="{{ label }}" {{ 'checked' if is_active }} />
+                                </label>
+                            {% endfor %}
+                            
+                            </div>
                     </div>
                     
                     <div class="table-container">
@@ -96,123 +96,66 @@
                                 <tr>
                                     <th class="table-head">Fecha/Hora</th>
                                     <th class="table-head">Cliente</th>
-                                    <th class="table-head">Vehículo (Placa/Modelo)</th>
-                                    <th class="table-head">Servicio Solicitado</th>
+                                    <th class="table-head">Vehículo (Marca/Modelo)</th>
+                                    <th class="table-head">Costo Estimado</th>
                                     <th class="table-head">Técnico Asignado</th>
                                     <th class="table-head">Estado</th>
                                     <th class="table-head text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody class="table-body">
+                                {% for cita in citas %}
                                 <tr class="table-row">
-                                    <td class="table-cell">25/10/2023 10:30 AM</td>
-                                    <td class="table-cell font-medium">Juan Pérez</td>
-                                    <td class="table-cell">XYZ-123 - Tesla Model 3</td>
-                                    <td class="table-cell">Revisión de batería</td>
-                                    <td class="table-cell">Carlos Gómez</td>
+                                    <td class="table-cell">{{ cita.fecha.strftime('%d/%m/%Y') }} {{ cita.hora }}</td>
+                                    <td class="table-cell font-medium">{{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</td>
+                                    <td class="table-cell">{{ cita.vehiculo.marca.value }} {{ cita.vehiculo.modelo }}</td>
+                                    <td class="table-cell">${{ "{:,.2f}".format(cita.costo) }}</td>
+                                    <td class="table-cell">{{ cita.tecnico.nombre }} {{ cita.tecnico.apellido }}</td>
                                     <td class="table-cell">
-                                        <span class="status-badge completed">Completada</span>
+                                        {% set estado_class = cita.estado.value | lower | replace(' ', '-') %}
+                                        <span class="status-badge {{ estado_class }}">{{ cita.estado.value }}</span>
                                     </td>
                                     <td class="table-cell text-center">
                                         <div class="actions-container">
-                                            <button class="action-btn">
+                                            <a href="/tecnico/cita/{{ cita.id }}/detalle" title="Ver Detalle" class="action-btn">
                                                 <span class="material-symbols-outlined action-icon">visibility</span>
-                                            </button>
-                                            <button class="action-btn">
+                                            </a>
+                                            <button class="action-btn" title="Eliminar Cita" onclick="confirmDelete({{ cita.id }})">
                                                 <span class="material-symbols-outlined action-icon delete">delete</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
+                                {% else %}
                                 <tr class="table-row">
-                                    <td class="table-cell">25/10/2023 11:00 AM</td>
-                                    <td class="table-cell font-medium">Ana López</td>
-                                    <td class="table-cell">ABC-456 - Nissan Leaf</td>
-                                    <td class="table-cell">Cambio de neumáticos</td>
-                                    <td class="table-cell">Laura Torres</td>
-                                    <td class="table-cell">
-                                        <span class="status-badge in-progress">En Curso</span>
-                                    </td>
-                                    <td class="table-cell text-center">
-                                        <div class="actions-container">
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon">visibility</span>
-                                            </button>
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon delete">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <td class="table-cell text-center" colspan="7">No se encontraron citas para el filtro seleccionado.</td>
                                 </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">25/10/2023 01:00 PM</td>
-                                    <td class="table-cell font-medium">Pedro Ramírez</td>
-                                    <td class="table-cell">DEF-789 - Chevrolet Bolt</td>
-                                    <td class="table-cell">Diagnóstico general</td>
-                                    <td class="table-cell">Carlos Gómez</td>
-                                    <td class="table-cell">
-                                        <span class="status-badge pending">Pendiente</span>
-                                    </td>
-                                    <td class="table-cell text-center">
-                                        <div class="actions-container">
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon">visibility</span>
-                                            </button>
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon delete">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">26/10/2023 09:00 AM</td>
-                                    <td class="table-cell font-medium">María Fernández</td>
-                                    <td class="table-cell">GHI-012 - Hyundai Ioniq 5</td>
-                                    <td class="table-cell">Mantenimiento programado</td>
-                                    <td class="table-cell">Laura Torres</td>
-                                    <td class="table-cell">
-                                        <span class="status-badge pending">Pendiente</span>
-                                    </td>
-                                    <td class="table-cell text-center">
-                                        <div class="actions-container">
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon">visibility</span>
-                                            </button>
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon delete">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell">26/10/2023 09:30 AM</td>
-                                    <td class="table-cell font-medium">Luis García</td>
-                                    <td class="table-cell">JKL-345 - Ford Mustang Mach-E</td>
-                                    <td class="table-cell">Fallo en sistema de carga</td>
-                                    <td class="table-cell">Carlos Gómez</td>
-                                    <td class="table-cell">
-                                        <span class="status-badge cancelled">Cancelada</span>
-                                    </td>
-                                    <td class="table-cell text-center">
-                                        <div class="actions-container">
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon">visibility</span>
-                                            </button>
-                                            <button class="action-btn">
-                                                <span class="material-symbols-outlined action-icon delete">delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     
                     <div class="pagination-container">
-                        <span class="pagination-info">Mostrando 1-5 de 25 citas</span>
+                        {% if total_citas > 0 %}
+                            <span class="pagination-info">Mostrando {{ start_item }}-{{ end_item }} de {{ total_citas }} citas</span>
+                        {% else %}
+                            <span class="pagination-info">No hay citas para mostrar.</span>
+                        {% endif %}
                         <div class="pagination-controls">
-                            <button class="pagination-btn disabled" disabled="">Anterior</button>
-                            <button class="pagination-btn">Siguiente</button>
+                            {% set prev_page_link = '/tecnico/citas?page=' ~ (page - 1) ~ '&page_size=' ~ page_size ~ ('&estado_filtro=' ~ estado_filtro if estado_filtro) %}
+                            {% set next_page_link = '/tecnico/citas?page=' ~ (page + 1) ~ '&page_size=' ~ page_size ~ ('&estado_filtro=' ~ estado_filtro if estado_filtro) %}
+
+                            <a href="{{ prev_page_link }}" 
+                                class="pagination-btn {{ 'disabled' if page == 1 }}" 
+                                {{ 'aria-disabled="true"' if page == 1 }}>
+                                Anterior
+                            </a>
+                            
+                            <a href="{{ next_page_link }}" 
+                                class="pagination-btn {{ 'disabled' if page >= total_pages }}" 
+                                {{ 'aria-disabled="true"' if page >= total_pages }}>
+                                Siguiente
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -220,6 +163,16 @@
         </div>
     </div>
 
+    <script>
+        function confirmDelete(citaId) {
+            if (confirm(`¿Estás seguro de que quieres eliminar la cita #${citaId}? Esta acción no se puede deshacer.`)) {
+                // Idealmente, usarías fetch/AJAX para enviar una petición DELETE al backend.
+                // Ejemplo de redirección simple (debes implementar el endpoint /tecnico/cita/{id}/eliminar):
+                // window.location.href = `/tecnico/cita/${citaId}/eliminar`; 
+                alert(`Lógica de eliminación para la cita ${citaId} debe ser implementada en el backend.`);
+            }
+        }
+    </script>
     <script src="../../static/js/tecnico/tecnicoCitas.js"></script>
 </body>
 </html>
