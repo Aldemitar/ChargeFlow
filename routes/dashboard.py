@@ -129,18 +129,6 @@ async def dashboard_tecnico(
         }
     )
 
-@router.get("/tecnico/clientes", response_class=HTMLResponse)
-async def tecnico_clientes(
-    request: Request,
-    user=Depends(require_roles(RolUsuario.TECNICO)),
-    session: AsyncSession = Depends(get_session)
-):
-    tecnico = user
-    return templates.TemplateResponse(
-        "tecnico/tecnicoClientes.html",
-        {"request": request, "tecnico": tecnico}
-    )
-
 @router.get("/tecnico/vehiculos", response_class=HTMLResponse)
 async def tecnico_vehiculos(
     request: Request,
