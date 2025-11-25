@@ -129,18 +129,6 @@ async def dashboard_tecnico(
         }
     )
 
-@router.get("/tecnico/citas", response_class=HTMLResponse)
-async def tecnico_citas(
-    request: Request,
-    user=Depends(require_roles(RolUsuario.TECNICO)),
-    session: AsyncSession = Depends(get_session)
-):
-    tecnico = user
-    return templates.TemplateResponse(
-        "tecnico/tecnicoCitas.html",
-        {"request": request, "tecnico": tecnico}
-    )
-
 @router.get("/tecnico/clientes", response_class=HTMLResponse)
 async def tecnico_clientes(
     request: Request,
@@ -201,7 +189,6 @@ def obtener_estado_cita(estado_str: Optional[str]) -> Optional[EstadoCita]:
     key = estado_str.upper().replace(' ', '_')
     return estado_map.get(key)
 
-
 @router.get("/tecnico/citas", response_class=HTMLResponse)
 async def citas_tecnico(
     request: Request,
@@ -223,11 +210,23 @@ async def citas_tecnico(
         base_query = base_query.where(Cita.estado == estado_enum)
     elif estado_filtro and estado_filtro.upper() == "TODAS":
         pass
+        estado_filtro = "Todas"
     else:
         base_query = base_query.where(
             Cita.estado.in_([EstadoCita.PENDIENTE, EstadoCita.EN_PROGRESO])
         )
         estado_filtro = "Activas"
+
+    if search:
+        search_term = f"%{search}%"
+
+        base_query = base_query.join(Cita.cliente).join(Cita.vehiculo).where(
+            or_(
+                Usuario.nombre.ilike(search_term), 
+                Usuario.apellido.ilike(search_term), 
+                Vehiculo.modelo.ilike(search_term),
+            )
+        )
 
     count_query = select(func.count()).select_from(base_query.subquery())
     total_citas_result = await session.execute(count_query)
@@ -245,7 +244,7 @@ async def citas_tecnico(
     )
     citas: List[Cita] = result.scalars().unique().all()
 
-    total_pages = math.ceil(total_citas / page_size)
+    total_pages = math.ceil(total_citas / page_size) if total_citas > 0 else 1
     start_item = offset + 1 if total_citas > 0 else 0
     end_item = min(offset + page_size, total_citas)
 
@@ -261,7 +260,8 @@ async def citas_tecnico(
             "total_pages": total_pages,
             "start_item": start_item,
             "end_item": end_item,
-            "estado_filtro": estado_filtro or "Activas",
+            "estado_filtro": estado_filtro, 
+            "search": search or "",
             "tecnico_logueado_id": tecnico.id
         }
     )
