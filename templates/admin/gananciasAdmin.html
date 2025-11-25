@@ -15,26 +15,25 @@
 
 <body>
     <div class="layout">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="top">
                 <div class="user">
                     <div class="avatar"></div>
                     <div class="info">
-                        <h3>Admin</h3>
-                        <p>admin@chargeflow.com</p>
+                        <h1 class="user-name">{{ admin.nombre }} {{ admin.apellido }}</h1>
+                        <p class="user-email">{{ admin.email }}</p>
                     </div>
                 </div>
                 <nav>
-                    <a href="../admin/adminDashboard.html">
+                    <a href="/admin/dashboard">
                         <span class="material-icons">dashboard</span>
                         <span>Dashboard</span>
                     </a>
-                    <a class="active" href="../admin/gananciasAdmin.html">
+                    <a class="active" href="/admin/ganancias">
                         <span class="material-icons">payments</span>
                         <span>Ganancias</span>
                     </a>
-                    <a href="../admin/tecnicoAdmin.html">
+                    <a href="/admin/tecnicos">
                         <span class="material-icons">engineering</span>
                         <span>Técnico</span>
                     </a>

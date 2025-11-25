@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html class="light" lang="es">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>ChargeFlow - Gestión de Citas</title>
-    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoCitas.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/tecnico/tecnicoCitas.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -89,7 +91,7 @@
                             
                             </div>
                     </div>
-                    
+
                     <div class="table-container">
                         <table class="appointments-table">
                             <thead class="table-header">
@@ -134,7 +136,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <div class="pagination-container">
                         {% if total_citas > 0 %}
                             <span class="pagination-info">Mostrando {{ start_item }}-{{ end_item }} de {{ total_citas }} citas</span>
@@ -166,13 +168,11 @@
     <script>
         function confirmDelete(citaId) {
             if (confirm(`¿Estás seguro de que quieres eliminar la cita #${citaId}? Esta acción no se puede deshacer.`)) {
-                // Idealmente, usarías fetch/AJAX para enviar una petición DELETE al backend.
-                // Ejemplo de redirección simple (debes implementar el endpoint /tecnico/cita/{id}/eliminar):
-                // window.location.href = `/tecnico/cita/${citaId}/eliminar`; 
                 alert(`Lógica de eliminación para la cita ${citaId} debe ser implementada en el backend.`);
             }
         }
     </script>
     <script src="../../static/js/tecnico/tecnicoCitas.js"></script>
 </body>
+
 </html>

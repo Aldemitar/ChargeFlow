@@ -30,14 +30,41 @@ async def admin_dashboard(
     request: Request,
     user=Depends(require_roles(RolUsuario.ADMIN))
 ):
-    """
-    Dashboard del administrador — muestra acceso a paneles globales.
-    """
+    
+    admin = user
+
     return templates.TemplateResponse(
         "admin/adminDashboard.html",
-        {"request": request, "user": user}
+        {"request": request, "admin": admin}
     )
 
+@router.get("/admin/ganancias", response_class=HTMLResponse)
+async def admin_ganancias(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.ADMIN))
+):
+    
+    admin = user
+
+    return templates.TemplateResponse(
+        "admin/gananciasAdmin.html",
+        {"request": request, "admin": admin}
+    )
+
+@router.get("/admin/tecnicos", response_class=HTMLResponse)
+async def admin_tecnicos(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.ADMIN))
+):
+    
+    admin = user
+
+    return templates.TemplateResponse(
+        "admin/tecnicoAdmin.html",
+        {"request": request, "admin": admin}
+    )
+
+# Templates de técnico
 @router.get("/tecnico/dashboard", response_class=HTMLResponse)
 async def dashboard_tecnico(
     request: Request,
@@ -102,14 +129,60 @@ async def dashboard_tecnico(
         }
     )
 
+@router.get("/tecnico/citas", response_class=HTMLResponse)
+async def tecnico_citas(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    tecnico = user
+    return templates.TemplateResponse(
+        "tecnico/tecnicoCitas.html",
+        {"request": request, "tecnico": tecnico}
+    )
+
+@router.get("/tecnico/clientes", response_class=HTMLResponse)
+async def tecnico_clientes(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    tecnico = user
+    return templates.TemplateResponse(
+        "tecnico/tecnicoClientes.html",
+        {"request": request, "tecnico": tecnico}
+    )
+
+@router.get("/tecnico/vehiculos", response_class=HTMLResponse)
+async def tecnico_vehiculos(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    tecnico = user
+    return templates.TemplateResponse(
+        "tecnico/tecnicoVehiculos.html",
+        {"request": request, "tecnico": tecnico}
+    )
+
+@router.get("/tecnico/baterias", response_class=HTMLResponse)
+async def tecnico_baterias(
+    request: Request,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    tecnico = user
+    return templates.TemplateResponse(
+        "tecnico/tecnicoBaterias.html",
+        {"request": request, "tecnico": tecnico}
+    )
+
 @router.get("/cliente/dashboard", response_class=HTMLResponse)
 async def cliente_dashboard(
     request: Request,
-    user=Depends(require_roles(RolUsuario.CLIENTE))
+    user=Depends(require_roles(RolUsuario.CLIENTE)),
+    session: AsyncSession = Depends(get_session)
 ):
-    """
-    Dashboard del cliente — muestra sus datos y citas.
-    """
     return templates.TemplateResponse(
         "cliente/clienteDashboard.html",
         {"request": request, "user": user}
@@ -439,4 +512,3 @@ async def eliminar_cliente(
     await session.commit()
     
     return
-
