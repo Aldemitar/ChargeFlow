@@ -342,6 +342,7 @@ async def mostrar_formulario_cita(
             "today": date.today().isoformat(),
         }
     )
+
 @router.get("/tecnico/clientes", response_class=HTMLResponse)
 async def listar_clientes(
     request: Request,
@@ -452,13 +453,23 @@ async def obtener_detalle_cliente(
     
     return cliente
 
-@router.put("/tecnico/clientes/{cliente_id}", response_model=ClienteRead)
+@router.post("/tecnico/clientes/{cliente_id}") 
 async def actualizar_cliente(
     cliente_id: int,
-    cliente_in: ClienteUpdate,
+    method: Annotated[str, Form()], # 👈 CAMBIO CLAVE: Usamos 'method'
+    nombre: Annotated[Optional[str], Form()] = None,
+    apellido: Annotated[Optional[str], Form()] = None,
+    email: Annotated[Optional[EmailStr], Form()] = None,
+    telefono: Annotated[Optional[str], Form()] = None,
+    direccion: Annotated[Optional[str], Form()] = None,
+    activo: Annotated[Optional[bool], Form()] = None,
+    
     user: Usuario = Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
+    if method.upper() != "PUT": 
+        raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED, detail="Método no permitido. Use PUT simulado.")
+
     cliente = await session.get(Usuario, cliente_id)
     
     if not cliente or cliente.rol != RolUsuario.CLIENTE or cliente.eliminado:
@@ -466,34 +477,32 @@ async def actualizar_cliente(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Cliente con ID {cliente_id} no encontrado."
         )
-
-    update_data = cliente_in.dict(exclude_unset=True)
-
-    if 'email' in update_data and update_data['email'] != cliente.email:
-         existing_user_result = await session.execute(
-            select(Usuario).where(Usuario.email == update_data['email'], Usuario.id != cliente_id, Usuario.eliminado == False)
-        )
-         if existing_user_result.scalar_one_or_none():
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Ya existe otro usuario activo con este correo electrónico."
-            )
-
+    update_data = {
+        "nombre": nombre, "apellido": apellido, "email": email, 
+        "telefono": telefono, "direccion": direccion, "activo": activo
+    }
+    
     for key, value in update_data.items():
-        setattr(cliente, key, value)
-        
+        if value is not None:
+            setattr(cliente, key, value)
+            
     session.add(cliente)
     await session.commit()
-    await session.refresh(cliente)
-    
-    return cliente
+    return RedirectResponse(url="/tecnico/clientes", status_code=status.HTTP_303_SEE_OTHER)
 
-@router.delete("/tecnico/clientes/{cliente_id}")
+@router.post("/tecnico/clientes/{cliente_id}/eliminar") 
 async def eliminar_cliente(
     cliente_id: int,
+    method: Annotated[str, Form()], 
     user: Usuario = Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
+    if method.upper() != "DELETE":
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
+            detail="Método no permitido. Use POST con campo method='DELETE'."
+        )
+
     cliente = await session.get(Usuario, cliente_id)
     
     if not cliente or cliente.rol != RolUsuario.CLIENTE or cliente.eliminado:
@@ -502,10 +511,21 @@ async def eliminar_cliente(
             detail=f"Cliente con ID {cliente_id} no encontrado o ya eliminado."
         )
 
-    cliente.eliminado = True
-    cliente.activo = False
-    
-    session.add(cliente)
-    await session.commit()
-    
-    return
+    try:
+        cliente.eliminado = True
+
+        cliente.activo = False 
+        
+        session.add(cliente)
+
+        await session.commit() 
+        
+    except Exception as e:
+        await session.rollback()
+        print(f"Error al eliminar cliente {cliente_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Error al procesar la eliminación del cliente."
+        )
+
+    return RedirectResponse(url="/tecnico/clientes", status_code=status.HTTP_303_SEE_OTHER)
