@@ -4,7 +4,8 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, or_
 from datetime import date
-import math
+import math 
+from math import ceil
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -20,7 +21,7 @@ from sqlmodel import select, func
 
 from utils.auth import require_roles
 from utils.connection_db import get_session
-from data.models import Cita, Usuario, EstadoCita, RolUsuario, CitaCreate, Vehiculo, ClienteSelect, VehiculoSelect, ClienteRead, ClienteCreate, ClienteUpdate
+from data.models import Cita, Usuario, EstadoCita, RolUsuario, CitaCreate, Vehiculo, ClienteSelect, VehiculoSelect, ClienteRead, ClienteCreate, ClienteUpdate, VehiculoCreate, VehiculoRead, VehiculoUpdate, EstadoVehiculo
 
 router = APIRouter(prefix="", tags=["Dashboard"])
 templates = Jinja2Templates(directory="templates")
@@ -129,17 +130,173 @@ async def dashboard_tecnico(
         }
     )
 
+ITEMS_PER_PAGE = 10
+
 @router.get("/tecnico/vehiculos", response_class=HTMLResponse)
 async def tecnico_vehiculos(
     request: Request,
     user=Depends(require_roles(RolUsuario.TECNICO)),
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
+    page: int = Query(1, ge=1),
+    search: Optional[str] = Query(None)
 ):
     tecnico = user
+    offset = (page - 1) * ITEMS_PER_PAGE
+
+    main_statement = (
+        select(Vehiculo)
+        .where(Vehiculo.eliminado == False)
+        .options(selectinload(Vehiculo.citas).selectinload(Cita.cliente))
+    )
+
+    if search:
+        search_term = f"%{search}%"
+
+        main_statement = main_statement.join(Cita, isouter=True).join(Usuario, Cita.cliente_id == Usuario.id, isouter=True).where(
+            (Vehiculo.marca.cast(str).like(search_term)) |
+            (Vehiculo.modelo.like(search_term)) |
+            (Usuario.nombre.like(search_term)) |
+            (Usuario.apellido.like(search_term))
+        ).distinct()
+    subquery = main_statement.subquery()
+    count_statement = select(func.count(subquery.c.id))
+
+    total_vehiculos = await session.scalar(count_statement)
+
+    total_vehiculos = total_vehiculos or 0
+
+    total_pages = ceil(total_vehiculos / ITEMS_PER_PAGE) if total_vehiculos > 0 else 1
+
+    main_statement = main_statement.offset(offset).limit(ITEMS_PER_PAGE)
+    
+    vehiculos_result = await session.exec(main_statement)
+    vehiculos = vehiculos_result.unique().all()
+
+    vehiculos_para_html = []
+    for v in vehiculos:
+        cliente_info = "Sin Asignar"
+
+        if v.citas:
+            citas_ordenadas = sorted(v.citas, key=lambda c: c.fecha, reverse=True)
+            cita_reciente = citas_ordenadas[0]
+            
+            if cita_reciente and cita_reciente.cliente:
+                cliente_info = f"{cita_reciente.cliente.nombre} {cita_reciente.cliente.apellido}"
+                
+        vehiculos_para_html.append({
+            "id": v.id,
+            "marca": v.marca,
+            "modelo": v.modelo,
+            "año": v.año,
+            "estado": v.estado,
+            "cliente_asociado": cliente_info,
+        })
+
+    start_item = min(offset + 1, total_vehiculos)
+    end_item = min(offset + ITEMS_PER_PAGE, total_vehiculos)
+
     return templates.TemplateResponse(
         "tecnico/tecnicoVehiculos.html",
-        {"request": request, "tecnico": tecnico}
+        {
+            "request": request, 
+            "tecnico": tecnico, 
+            "vehiculos": vehiculos_para_html,
+            "search": search,
+            "page": page,
+            "total_vehiculos": total_vehiculos,
+            "total_pages": total_pages,
+            "start_item": start_item,
+            "end_item": end_item,
+        }
     )
+
+@router.post("/api/v1/tecnico/vehiculos", 
+             response_model=VehiculoRead, 
+             status_code=status.HTTP_201_CREATED)
+async def create_vehiculo(
+    vehiculo_in: VehiculoCreate,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+
+    nuevo_vehiculo = Vehiculo.model_validate(vehiculo_in, update={'estado': EstadoVehiculo.DISPONIBLE})
+    
+    try:
+        session.add(nuevo_vehiculo)
+        await session.commit()
+        await session.refresh(nuevo_vehiculo)
+        return nuevo_vehiculo
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail=f"Error al crear el vehículo: {str(e)}"
+        )
+
+@router.get("/api/v1/tecnico/vehiculos/{vehiculo_id}", response_model=VehiculoRead)
+async def read_vehiculo(
+    vehiculo_id: int,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    
+    vehiculo = await session.get(Vehiculo, vehiculo_id)
+    
+    if not vehiculo or vehiculo.eliminado:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="Vehículo no encontrado"
+        )
+        
+    return vehiculo
+
+@router.patch("/api/v1/tecnico/vehiculos/{vehiculo_id}", response_model=VehiculoRead)
+async def update_vehiculo(
+    vehiculo_id: int,
+    vehiculo_in: VehiculoUpdate,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    
+    vehiculo = await session.get(Vehiculo, vehiculo_id)
+    
+    if not vehiculo or vehiculo.eliminado:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="Vehículo no encontrado"
+        )
+
+    update_data = vehiculo_in.model_dump(exclude_unset=True)
+    vehiculo.model_validate(update_data, update=True)
+    
+    session.add(vehiculo)
+    await session.commit()
+    await session.refresh(vehiculo)
+    return vehiculo
+
+@router.delete("/api/v1/tecnico/vehiculos/{vehiculo_id}", status_code=status.HTTP_200_OK)
+async def soft_delete_vehiculo(
+    vehiculo_id: int,
+    user=Depends(require_roles(RolUsuario.TECNICO)),
+    session: AsyncSession = Depends(get_session)
+):
+    
+    vehiculo = await session.get(Vehiculo, vehiculo_id)
+    
+    if not vehiculo or vehiculo.eliminado:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="Vehículo no encontrado o ya eliminado"
+        )
+
+    vehiculo.eliminado = True
+    session.add(vehiculo)
+
+    if vehiculo.estado == EstadoVehiculo.DISPONIBLE:
+        vehiculo.estado = EstadoVehiculo.EN_TALLER
+        
+    await session.commit()
+    
+    return {"message": f"Vehículo con ID {vehiculo_id} eliminado lógicamente."}
 
 @router.get("/tecnico/baterias", response_class=HTMLResponse)
 async def tecnico_baterias(
