@@ -185,3 +185,24 @@ class ClienteRead(UsuarioBase):
     fecha_registro: date
     activo: bool
     eliminado: bool
+
+class VehiculoCreate(SQLModel):
+    marca: MarcaVehiculo = Field(..., description="Marca del vehículo.")
+    modelo: str = Field(..., min_length=1, max_length=100)
+    año: int = Field(..., gt=1900, description="Año de fabricación.")
+    imagen_url: Optional[str] = Field(default=None)
+
+class VehiculoUpdate(SQLModel):
+    marca: Optional[MarcaVehiculo] = None
+    modelo: Optional[str] = None
+    año: Optional[int] = Field(default=None, gt=1900)
+    imagen_url: Optional[str] = None
+    estado: Optional[EstadoVehiculo] = None
+
+class VehiculoRead(SQLModel):
+    id: int
+    marca: MarcaVehiculo
+    modelo: str
+    año: int
+    estado: EstadoVehiculo
+    eliminado: bool
