@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>ChargeFlow - Gestión de Vehículos</title>
-    <link rel="stylesheet" href="/static/css/tecnico/tecnicoVehiculos.css">
+    <link rel="stylesheet" href="../../static/css/tecnico/tecnicoVehiculos.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -19,8 +19,8 @@
                     <div class="user-info">
                         <div class="user-avatar"></div>
                         <div class="user-details">
-                            <h1 class="user-name">{{ tecnico.nombre if tecnico.nombre else 'Admin' }}</h1>
-                            <p class="user-email">{{ tecnico.email if tecnico.email else 'admin@chargeflow.com' }}</p>
+                            <h1 class="user-name">{{ tecnico.nombre }} {{ tecnico.apellido }}</h1>
+                            <p class="user-email">{{ tecnico.email }}</p>
                         </div>
                     </div>
                     <div class="navigation">
@@ -36,7 +36,7 @@
                             <span class="material-symbols-outlined">group</span>
                             <p class="nav-text">Clientes</p>
                         </a>
-                        <a class="nav-item active" href="/tecnico/vehiculos">
+                        <a class="nav-item  active" href="/tecnico/vehiculos">
                             <span class="material-symbols-outlined">directions_car</span>
                             <p class="nav-text">Vehículos</p>
                         </a>
@@ -46,8 +46,7 @@
                         </a>
                     </div>
                 </div>
-                <form action="/login/logout" method="get">
-                    <button type="submit" class="logout-btn">
+                <form action="/logout" method="post"> <button type="submit" class="logout-btn">
                         <span class="logout-text">Cerrar Sesión</span>
                     </button>
                 </form>
@@ -58,19 +57,20 @@
                 <div class="content-header">
                     <p class="page-title">Gestión de Vehículos</p>
                 </div>
+                
                 <div class="search-section">
-                    <div class="search-container">
-                        <form method="get" action="/tecnico/vehiculos" class="search-label">
+                    <form action="/tecnico/vehiculos" method="GET" class="search-container">
+                        <label class="search-label">
                             <div class="search-wrapper">
                                 <div class="search-icon">
                                     <span class="material-symbols-outlined">search</span>
                                 </div>
-                                <input class="search-input" name="search" placeholder="Buscar por placa, marca, modelo o cliente"
-                                    value="{{ search | default('') }}" />
-                                <button type="submit" style="display:none;">Buscar</button>
+                                <input class="search-input" placeholder="Buscar por marca, modelo, año o cliente"
+                                    name="search" value="{{ search or '' }}" />
+                                <button type="submit" style="display: none;">Buscar</button>
                             </div>
-                        </form>
-                    </div>
+                        </label>
+                    </form>
                     <div class="add-button-container">
                         <button class="add-vehicle-btn" id="addVehicleBtn">
                             <span class="material-symbols-outlined">add</span>
@@ -78,6 +78,7 @@
                         </button>
                     </div>
                 </div>
+
                 <div class="table-section">
                     <div class="table-wrapper">
                         <table class="vehicles-table">
@@ -92,43 +93,57 @@
                                 </tr>
                             </thead>
                             <tbody class="table-body">
+                                {% if vehiculos %}
                                 {% for vehiculo in vehiculos %}
                                 <tr class="table-row">
-                                    <td class="table-cell">{{ vehiculo.placa }}</td>
+                                    <td class="table-cell">{{ vehiculo.id }}</td>
                                     <td class="table-cell">{{ vehiculo.marca }}</td>
                                     <td class="table-cell">{{ vehiculo.modelo }}</td>
-                                    <td class="table-cell">{{ vehiculo.anio }}</td>
+                                    <td class="table-cell">{{ vehiculo.año }}</td>
                                     <td class="table-cell">
-                                        <a class="client-link" href="#">{{ vehiculo.cliente }}</a>
+                                        {% if vehiculo.cliente_asociado != "Sin Asignar" %}
+                                            <a class="client-link" href="#">{{ vehiculo.cliente_asociado }}</a>
+                                        {% else %}
+                                            {{ vehiculo.cliente_asociado }}
+                                        {% endif %}
                                     </td>
                                     <td class="table-cell actions-cell">
                                         <div class="actions-container">
-                                            <button class="action-btn edit-btn" data-id="{{ vehiculo.id }}">
+                                            <button class="action-btn edit-btn" data-vehiculo-id="{{ vehiculo.id }}">
                                                 <span class="material-symbols-outlined">edit</span>
                                             </button>
-                                            <button class="action-btn delete-btn" data-id="{{ vehiculo.id }}">
+                                            <button class="action-btn delete-btn" data-vehiculo-id="{{ vehiculo.id }}">
                                                 <span class="material-symbols-outlined">delete</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                                {% else %}
-                                <tr>
-                                    <td class="table-cell" colspan="6">No hay vehículos encontrados.</td>
-                                </tr>
                                 {% endfor %}
+                                {% else %}
+                                <tr class="table-row">
+                                    <td class="table-cell" colspan="6">No se encontraron vehículos.</td>
+                                </tr>
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
+                    
                     <div class="pagination-container">
                         <span class="pagination-info">Mostrando {{ start_item }}-{{ end_item }} de {{ total_vehiculos }} vehículos</span>
                         <div class="pagination-controls">
-                            {% if page > 1 %}
-                            <a href="?page={{ page - 1 }}&search={{ search }}" class="pagination-btn">Anterior</a>
-                            {% endif %}
-                            {% if page < total_pages %}
-                            <a href="?page={{ page + 1 }}&search={{ search }}" class="pagination-btn">Siguiente</a>
-                            {% endif %}
+                            {% set prev_page_url = request.url.include_query_params(page=page - 1, search=search) %}
+                            <button class="pagination-btn" 
+                                {% if page <= 1 %} disabled {% endif %}
+                                onclick="window.location.href = '{{ prev_page_url }}'">
+                                Anterior
+                            </button>
+                            
+                            {% set next_page_url = request.url.include_query_params(page=page + 1, search=search) %}
+                            <button class="pagination-btn" 
+                                {% if page >= total_pages or total_vehiculos == 0 %} disabled {% endif %}
+                                onclick="window.location.href = '{{ next_page_url }}'">
+                                Siguiente
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -136,7 +151,7 @@
         </div>
     </div>
 
-    <script src="/static/js/tecnico/tecnicoVehiculos.js"></script>
+    <script src="../../static/js/tecnico/tecnicoVehiculos.js"></script>
 </body>
 
 </html>

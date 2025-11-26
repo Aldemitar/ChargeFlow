@@ -1,4 +1,4 @@
-// JavaScript para la Gestión de Vehículos
+// JavaScript para la Gestión de Vehículos (tecnicoVehiculos.js)
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Gestión de Vehículos cargado');
@@ -6,38 +6,55 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar funcionalidades
     initializeSearch();
     initializeActionButtons();
-    initializeAddButton();
+    initializeAddButton(); // Inicializa el botón de Añadir Vehículo
     initializeLogoutButton();
 });
 
-// Función para inicializar la búsqueda
+// --- Funcionalidad de Búsqueda (Filtro por JS en el lado del cliente) ---
+// NOTA: Para una búsqueda real que funcione con la paginación de FastAPI,
+// la búsqueda debe hacerse mediante el formulario HTML (re-envío al servidor).
+// Esta función de JS solo filtra los resultados ya cargados en la página actual.
 function initializeSearch() {
+    // Usamos el input de búsqueda que no tiene un manejador de submit directo,
+    // por lo que el filtrado por JS es un buen fallback/complemento.
     const searchInput = document.querySelector('.search-input');
 
-    searchInput.addEventListener('input', function () {
-        const searchTerm = this.value.toLowerCase();
-        console.log('Buscando:', searchTerm);
+    // Si se está usando el filtro del lado del servidor (FastAPI), este evento
+    // puede interferir, ya que el reenvío del formulario es la forma correcta.
+    // Si la búsqueda se gestiona por el backend, este bloque se puede comentar
+    // o modificar para hacer un submit directo al cambiar el valor.
+    searchInput.addEventListener('input', function (event) {
+        // Para que funcione con el endpoint de FastAPI, el evento debería
+        // mandar el formulario: event.target.closest('form').submit();
+        // Sin embargo, mantendremos el filtro JS local por si es necesario.
 
-        // Filtrar vehículos
+        const searchTerm = this.value.toLowerCase();
+        console.log('Buscando en página actual:', searchTerm);
+
+        // Filtrar vehículos en la tabla actual
         filterVehicles(searchTerm);
     });
 }
 
-// Función para filtrar vehículos
+// Función para filtrar vehículos por ID, Marca, Modelo o Cliente Asociado
 function filterVehicles(searchTerm) {
-    const tableRows = document.querySelectorAll('.table-row');
+    // Excluye la fila de "No hay vehículos"
+    const tableRows = document.querySelectorAll('.table-body .table-row:not(:last-child)'); 
 
     tableRows.forEach(row => {
-        const licensePlate = row.cells[0].textContent.toLowerCase();
-        const brand = row.cells[1].textContent.toLowerCase();
-        const model = row.cells[2].textContent.toLowerCase();
-        const client = row.cells[4].textContent.toLowerCase();
+        // Indices de las celdas en el HTML de vehículos:
+        // ID: 0, Marca: 1, Modelo: 2, Año: 3, Cliente Asociado: 4, Estado: 5, Acciones: 6
+        const vehicleId = row.cells[0]?.textContent.toLowerCase() || '';
+        const vehicleBrand = row.cells[1]?.textContent.toLowerCase() || '';
+        const vehicleModel = row.cells[2]?.textContent.toLowerCase() || '';
+        const client = row.cells[4]?.textContent.toLowerCase() || '';
 
-        const matchesSearch = licensePlate.includes(searchTerm) ||
-            brand.includes(searchTerm) ||
-            model.includes(searchTerm) ||
+        const matchesSearch = vehicleId.includes(searchTerm) ||
+            vehicleBrand.includes(searchTerm) ||
+            vehicleModel.includes(searchTerm) ||
             client.includes(searchTerm);
 
+        // Muestra u oculta la fila según si coincide con el término de búsqueda
         if (matchesSearch || searchTerm === '') {
             row.style.display = '';
         } else {
@@ -46,110 +63,68 @@ function filterVehicles(searchTerm) {
     });
 }
 
-// Función para inicializar botones de acción
+// --- Funcionalidad de Botones de Acción (Editar/Eliminar) ---
 function initializeActionButtons() {
     const editButtons = document.querySelectorAll('.edit-btn');
-    const deleteButtons = document.querySelectorAll('.delete-btn');
-    const clientLinks = document.querySelectorAll('.client-link');
-
+    
     // Botones de editar
     editButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const row = this.closest('.table-row');
-            const licensePlate = row.cells[0].textContent;
-            const brand = row.cells[1].textContent;
-            const model = row.cells[2].textContent;
-
-            console.log('Editando vehículo:', licensePlate, brand, model);
+            const vehicleId = this.dataset.id; // Asume que el ID está en el data-id del botón
+            
+            console.log('Editando vehículo:', vehicleId);
 
             // Aquí iría la lógica para editar el vehículo
-            openEditModal(licensePlate, brand, model);
+            openEditModal(vehicleId);
         });
     });
 
-    // Botones de eliminar
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const row = this.closest('.table-row');
-            const licensePlate = row.cells[0].textContent;
-            const brand = row.cells[1].textContent;
-            const model = row.cells[2].textContent;
-
-            if (confirm(`¿Estás seguro de que quieres eliminar el vehículo ${licensePlate} - ${brand} ${model}?`)) {
-                console.log('Eliminando vehículo:', licensePlate);
-
-                // Aquí iría la lógica para eliminar el vehículo
-                // En una implementación real, harías una petición al servidor
-                row.remove();
-
-                // Actualizar contador
-                updateVehicleCount();
-
-                // Mostrar mensaje de éxito
-                showNotification(`Vehículo ${licensePlate} eliminado correctamente`, 'success');
-            }
-        });
-    });
-
-    // Enlaces de clientes
-    clientLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const clientName = this.textContent;
-            console.log('Ver detalles del cliente:', clientName);
-
-            // Aquí iría la lógica para ver detalles del cliente
-            // Por ejemplo, redirigir a la página de gestión de clientes
-            // o abrir un modal con información del cliente
-            openClientDetails(clientName);
-        });
-    });
+    // NOTA: El botón de eliminar ya está envuelto en un <form> con un
+    // 'onsubmit' de confirmación en el HTML, lo cual es la forma recomendada
+    // para manejar peticiones POST/DELETE en templates Jinja/Flask/FastAPI.
+    // Por lo tanto, no se necesita un manejador de evento 'click' adicional para la eliminación aquí.
 }
 
-// Función para inicializar botón de añadir vehículo
+// --- Botón de Añadir Vehículo ---
 function initializeAddButton() {
-    const addButton = document.querySelector('.add-vehicle-btn');
+    // El HTML usa id="addVehicleBtn"
+    const addButton = document.getElementById('addVehicleBtn'); 
 
-    addButton.addEventListener('click', function () {
-        console.log('Añadir nuevo vehículo');
+    if (addButton) {
+        addButton.addEventListener('click', function () {
+            console.log('Añadir nuevo vehículo');
 
-        // Aquí iría la lógica para abrir un formulario de añadir vehículo
-        // Por ejemplo, abrir un modal o redirigir a una página de creación
-        openAddVehicleModal();
-    });
-}
-
-// Función para inicializar botón de cerrar sesión
-function initializeLogoutButton() {
-    const logoutButton = document.querySelector('.logout-btn');
-
-    logoutButton.addEventListener('click', function () {
-        if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-            console.log('Cerrando sesión...');
-
-            // Aquí iría la lógica para cerrar sesión
-            // Por ejemplo, hacer una petición al servidor y redirigir
-            // window.location.href = '/logout';
-        }
-    });
-}
-
-// Función para actualizar contador de vehículos
-function updateVehicleCount() {
-    const visibleRows = document.querySelectorAll('.table-row[style=""]').length;
-    const totalRows = document.querySelectorAll('.table-row').length;
-    const paginationInfo = document.querySelector('.pagination-info');
-
-    if (paginationInfo) {
-        paginationInfo.textContent = `Mostrando 1-${visibleRows} de ${totalRows} vehículos`;
+            // Aquí iría la lógica para abrir un formulario de añadir vehículo
+            openAddVehicleModal();
+        });
     }
 }
 
+// --- Botón de Cerrar Sesión ---
+function initializeLogoutButton() {
+    const logoutButton = document.querySelector('.logout-btn');
+
+    logoutButton.addEventListener('click', function (event) {
+        // En este caso, el HTML ya tiene el <form> apuntando a /login/logout
+        // Este if/confirm evitaría el submit del form
+        // if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+        //     console.log('Cerrando sesión...');
+        //     // El formulario se enviará
+        // } else {
+        //     event.preventDefault(); // Previene el envío si se cancela
+        // }
+        // Se deja el comportamiento por defecto del HTML (envío de form)
+        console.log('Cerrando sesión...');
+    });
+}
+
+// --- Funciones de Modal/Notificación (Placeholders) ---
+
 // Función para abrir modal de edición (placeholder)
-function openEditModal(licensePlate, brand, model) {
-    console.log('Abriendo modal de edición para:', licensePlate, brand, model);
+function openEditModal(vehicleId) {
+    console.log('Abriendo modal de edición para vehículo ID:', vehicleId);
     // En una implementación real, aquí abrirías un modal con el formulario de edición
-    // y cargarías los datos del vehículo
+    // y cargarías los datos del vehículo haciendo una petición GET a /api/v1/tecnico/vehiculos/{vehicleId}
 }
 
 // Función para abrir modal de añadir vehículo (placeholder)
@@ -158,14 +133,7 @@ function openAddVehicleModal() {
     // En una implementación real, aquí abrirías un modal con el formulario de añadir vehículo
 }
 
-// Función para abrir detalles del cliente (placeholder)
-function openClientDetails(clientName) {
-    console.log('Abriendo detalles del cliente:', clientName);
-    // En una implementación real, aquí redirigirías a la página de gestión de clientes
-    // o abrirías un modal con información del cliente
-}
-
-// Función para mostrar notificaciones
+// Función para mostrar notificaciones (Mantenida del original)
 function showNotification(message, type = 'info') {
     // Crear elemento de notificación
     const notification = document.createElement('div');
