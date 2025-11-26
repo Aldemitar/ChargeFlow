@@ -19,40 +19,34 @@
                     <div class="user-info">
                         <div class="user-avatar"></div>
                         <div class="user-details">
-                            <h1 class="user-name">{{ tecnico.nombre or 'Tecnico' }}</h1>
-                            <p class="user-email">{{ tecnico.email or 'tecnico@chargeflow.com' }}</p>
+                            <h1 class="user-name">{{ tecnico.nombre }} {{ tecnico.apellido }}</h1>
+                            <p class="user-email">{{ tecnico.email }}</p>
                         </div>
                     </div>
                     <div class="navigation">
-                        <a class="nav-item" href="/tecnico/dashboard">
                         <a class="nav-item" href="/tecnico/dashboard">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p class="nav-text">Dashboard</p>
                         </a>
                         <a class="nav-item" href="/tecnico/citas">
-                        <a class="nav-item" href="/tecnico/citas">
                             <span class="material-symbols-outlined">calendar_month</span>
                             <p class="nav-text">Citas</p>
                         </a>
-                        <a class="nav-item active" href="/tecnico/clientes">
                         <a class="nav-item active" href="/tecnico/clientes">
                             <span class="material-symbols-outlined">group</span>
                             <p class="nav-text">Clientes</p>
                         </a>
                         <a class="nav-item" href="/tecnico/vehiculos">
-                        <a class="nav-item" href="/tecnico/vehiculos">
                             <span class="material-symbols-outlined">directions_car</span>
                             <p class="nav-text">Vehículos</p>
                         </a>
-                        <a class="nav-item" href="/tecnico/baterias">
                         <a class="nav-item" href="/tecnico/baterias">
                             <span class="material-symbols-outlined">battery_full</span>
                             <p class="nav-text">Baterías</p>
                         </a>
                     </div>
                 </div>
-                <form action="/login/logout" method="get">
-                    <button class="logout-btn" type="submit">
+                <form action="/logout" method="post"> <button type="submit" class="logout-btn">
                         <span class="logout-text">Cerrar Sesión</span>
                     </button>
                 </form>
