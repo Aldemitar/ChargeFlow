@@ -1,15 +1,15 @@
-from fastapi import APIRouter, Request, Depends, Query
+from fastapi import APIRouter, Request, Depends, Query, Form, HTTPException, status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from datetime import date
 import math
 
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import select, SQLModel, Field, Relationship
-from typing import Optional, List
+from typing import Optional, List, Annotated
 from pydantic import EmailStr, validator
 from datetime import date, datetime
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -342,7 +342,6 @@ async def mostrar_formulario_cita(
             "today": date.today().isoformat(),
         }
     )
-
 @router.get("/tecnico/clientes", response_class=HTMLResponse)
 async def listar_clientes(
     request: Request,
@@ -402,30 +401,40 @@ async def listar_clientes(
         }
     )
 
-@router.post("/tecnico/clientes", response_model=ClienteRead)
+@router.post("/tecnico/clientes") 
 async def crear_cliente(
-    cliente_in: ClienteCreate,
+    nombre: Annotated[str, Form()],
+    apellido: Annotated[str, Form()],
+    email: Annotated[EmailStr, Form()],
+    contraseña: Annotated[str, Form()],
+    telefono: Annotated[Optional[str], Form()] = None,
+    direccion: Annotated[Optional[str], Form()] = None,
     user: Usuario = Depends(require_roles(RolUsuario.TECNICO)),
     session: AsyncSession = Depends(get_session)
 ):
     existing_user_result = await session.execute(
-        select(Usuario).where(Usuario.email == cliente_in.email, Usuario.eliminado == False)
+        select(Usuario).where(Usuario.email == email, Usuario.eliminado == False)
     )
     if existing_user_result.scalar_one_or_none():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Ya existe un usuario con este correo electrónico."
         )
-    cliente_data = cliente_in.dict()
+
     nuevo_cliente = Usuario(
-        **cliente_data,
+        nombre=nombre,
+        apellido=apellido,
+        email=email,
+        telefono=telefono,
+        direccion=direccion,
+        contraseña=contraseña,
         rol=RolUsuario.CLIENTE,
         fecha_registro=date.today()
     )
+    
     session.add(nuevo_cliente)
     await session.commit()
-    await session.refresh(nuevo_cliente)
-    return nuevo_cliente
+    return RedirectResponse(url="/tecnico/clientes", status_code=status.HTTP_303_SEE_OTHER)
 
 @router.get("/tecnico/clientes/{cliente_id}", response_model=ClienteRead)
 async def obtener_detalle_cliente(
